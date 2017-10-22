@@ -17,8 +17,8 @@ public class Swordfish extends SpriteObject {
      * Constructor
      * @param world Referentie naar de wereld
      */
-    public Swordfish(WaterWorld world) {
-        this(new Sprite("src/main/java/nl/han/ica/waterworld/media/swordfish.png"));
+    public Swordfish(WaterWorld world, int speed) {
+        this(new Sprite("src/main/java/nl/han/ica/waterworld/media/swordfish.png"), speed);
         this.world=world;
     }
 
@@ -26,9 +26,9 @@ public class Swordfish extends SpriteObject {
      * Maak een Swordfish aan met een sprite
      * @param sprite De sprite die aan dit object gekoppeld moet worden
      */
-    private Swordfish(Sprite sprite) {
+    private Swordfish(Sprite sprite, int speed) {
         super(sprite);
-        setxSpeed(-1);
+        setxSpeed(speed);
     }
 
     @Override

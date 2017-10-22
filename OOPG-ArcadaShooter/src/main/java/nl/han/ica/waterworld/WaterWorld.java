@@ -102,8 +102,10 @@ public class WaterWorld extends GameEngine {
     private void createObjects() {
         player = new Player(this);
         addGameObject(player, 100, 100);
-        Swordfish sf=new Swordfish(this);
+        Swordfish sf=new Swordfish(this, -1);
+        Swordfish sf2 = new Swordfish(this, -2);
         addGameObject(sf,200,200);
+        addGameObject(sf2,800,500);
     }
 
     /**
@@ -143,26 +145,28 @@ public class WaterWorld extends GameEngine {
      */
     private void initializeTileMap() {
         /* TILES */
-        Sprite boardsSprite = new Sprite("src/main/java/nl/han/ica/waterworld/media/boards.jpg");
-        TileType<BoardsTile> boardTileType = new TileType<>(BoardsTile.class, boardsSprite);
+        Sprite tileSprite = new Sprite("src/main/java/nl/han/ica/waterworld/media/boards.jpg");
 
-        TileType[] tileTypes = { boardTileType };
+        TileType<BoardsTile> boardTileType = new TileType<>(BoardsTile.class, tileSprite);
+        TileType<BubbleStopperTile> boardStopperTileType = new TileType<>(BubbleStopperTile.class, tileSprite);
+
+        TileType[] tileTypes = { boardTileType, boardStopperTileType };
         int tileSize=50;
         int tilesMap[][]={
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1, 0, 0, 0, 0,-1,0 , 0},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1, 1, 1, 1, 1, 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
         };
         tileMap = new TileMap(tileSize, tileTypes, tilesMap);
     }
@@ -175,16 +179,16 @@ public class WaterWorld extends GameEngine {
      * Vernieuwt het dashboard
      */
     private void refreshDasboardText() {
-        dashboardText.setText("Bubbles popped: "+bubblesPopped);
+        dashboardText.setText("Speler score: "+ Player.score);
     }
 
     /**
      * Verhoogt de teller voor het aantal
      * geknapte bellen met 1
      */
-    public void increaseBubblesPopped() {
-        bubblesPopped++;
-        persistence.saveData(Integer.toString(bubblesPopped));
+    public void registerPlayerScoreCount() {
+        
+        persistence.saveData(Integer.toString(Player.score));
         refreshDasboardText();
     }
 }

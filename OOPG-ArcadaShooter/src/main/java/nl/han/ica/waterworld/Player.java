@@ -1,23 +1,28 @@
 package nl.han.ica.waterworld;
 
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
+import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
 import nl.han.ica.OOPDProcessingEngineHAN.Exceptions.TileNotFoundException;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.AnimatedSpriteObject;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import nl.han.ica.waterworld.tiles.BoardsTile;
 import processing.core.PVector;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Ralph Niels
  * De spelerklasse (het paarse visje)
  */
-public class Player extends AnimatedSpriteObject implements ICollidableWithTiles {
+public class Player extends AnimatedSpriteObject implements ICollidableWithTiles, ICollidableWithGameObjects {
 
     final int size=25;
     private final WaterWorld world;
+    private Random r;
+    public static int score;
 
     /**
      * Constructor
@@ -28,6 +33,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
         this.world=world;
         setCurrentFrameIndex(1);
         setFriction(0.05f);
+        this.r = new Random();
     }
 
     @Override
@@ -71,7 +77,16 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
             System.out.println("Spatie!");
         }
     }
-
+    
+    public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
+        for (GameObject g:collidedGameObjects) {
+            if (g instanceof Swordfish) {
+                setX(r.nextInt(1000));
+                setY(r.nextInt(1000));
+                Player.score--;
+            }
+        }
+    }
 
     @Override
     public void tileCollisionOccurred(List<CollidedTile> collidedTiles)  {
@@ -87,14 +102,14 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithTiles
                         e.printStackTrace();
                     }
                 }
-                if (ct.collisionSide == ct.RIGHT) {
-                    try {
-                        vector = world.getTileMap().getTilePixelLocation(ct.theTile);
-                        world.getTileMap().setTile((int) vector.x / 50, (int) vector.y / 50, -1);
-                    } catch (TileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
+//                if (ct.collisionSide == ct.RIGHT) {
+//                    try {
+//                        vector = world.getTileMap().getTilePixelLocation(ct.theTile);
+//                        world.getTileMap().setTile((int) vector.x / 50, (int) vector.y / 50, -1);
+//                    } catch (TileNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
             }
         }
     }
