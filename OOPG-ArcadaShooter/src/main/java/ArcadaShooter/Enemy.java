@@ -9,7 +9,7 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import processing.core.PGraphics;
 
 public class Enemy extends GameObject implements ICollidableWithGameObjects, ICollidableWithTiles {
-
+	private int health;
 	public Enemy() {
 		// TODO Auto-generated constructor stub
 	}
