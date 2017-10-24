@@ -11,7 +11,7 @@ public class Bullet {
 	private Bullet[] bullets;
 	private boolean hasAmmo;
 	
-	public Bullet(int x, int y, boolean collidedWithEnemy) {
+	public Bullet() {
 		
 	}
 	
