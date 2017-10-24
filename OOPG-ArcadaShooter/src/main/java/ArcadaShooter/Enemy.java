@@ -6,17 +6,22 @@ import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 import processing.core.PGraphics;
 
-public class Enemy extends GameObject implements ICollidableWithGameObjects, ICollidableWithTiles {
+public class Enemy extends SpriteObject implements ICollidableWithGameObjects, ICollidableWithTiles {
 
-	public Enemy() {
-		// TODO Auto-generated constructor stub
+	private ArcadaShooter world;
+	
+	public Enemy(ArcadaShooter world) {
+		this(new Sprite(""));
+		this.world = world;
 	}
-
-	public Enemy(float x, float y, float width, float height) {
-		super(x, y, width, height);
-		// TODO Auto-generated constructor stub
+	
+	
+	private Enemy(Sprite sprite) {
+		super(sprite);
 	}
 
 	@Override
@@ -34,13 +39,7 @@ public class Enemy extends GameObject implements ICollidableWithGameObjects, ICo
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void draw(PGraphics g) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }
