@@ -9,12 +9,13 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import processing.core.PGraphics;
 
 public class Enemy extends GameObject implements ICollidableWithGameObjects, ICollidableWithTiles {
-	private int health;
+	protected int damage;
+	private World AracadaShooter;
 	public Enemy() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Enemy(float x, float y, float width, float height) {
+	public Enemy(World ArcadiaShooter, float x, float y, float width, float height) {
 		super(x, y, width, height);
 		// TODO Auto-generated constructor stub
 	}
@@ -41,6 +42,9 @@ public class Enemy extends GameObject implements ICollidableWithGameObjects, ICo
 	public void draw(PGraphics g) {
 		// TODO Auto-generated method stub
 
+	}
+	protected void doDamage() {
+		
 	}
 
 }

@@ -1,5 +1,9 @@
 package ArcadaShooter;
 
+import java.util.List;
+
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
+
 public abstract class Pickup {
 	boolean isActive;
 	
@@ -7,5 +11,5 @@ public abstract class Pickup {
 	
 	public abstract void deactivate();
 	
-	public abstract boolean collidedWithPlayer();
+	public abstract void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects);
 }

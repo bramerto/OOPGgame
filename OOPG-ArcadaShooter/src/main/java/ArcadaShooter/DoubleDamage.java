@@ -1,9 +1,12 @@
 package ArcadaShooter;
 
-public class DoubleDamage extends Pickup{
-	public boolean isActive;
-	public Weapon weapon;
-	public int Duration = 30;
+import java.util.List;
+
+import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
+
+public class DoubleDamage extends Pickup implements IAlarmListener{
+	private Weapon weapon;
 	
 	public DoubleDamage(int duration, Weapon weapon){
 		
@@ -14,6 +17,7 @@ public class DoubleDamage extends Pickup{
 	}
 	
 	public void addDamage() {
+		int damage = 10*2;
 		
 	}
 	@Override
@@ -21,7 +25,13 @@ public class DoubleDamage extends Pickup{
 		isActive = false;
 	}
 	@Override
-	public boolean collidedWithPlayer() {
-		return false;
+	public void triggerAlarm(String alarmName) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
+		// TODO Auto-generated method stub
+		
 	}
 }

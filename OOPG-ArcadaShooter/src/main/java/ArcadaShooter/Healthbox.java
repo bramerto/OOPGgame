@@ -1,20 +1,19 @@
 package ArcadaShooter;
 
+import java.util.List;
+
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
+
 public class Healthbox extends Pickup{
-	public boolean isActive;
-	public Player player;
-	public int healthUp = 60;
+	private boolean isActive;
+	private Player player;
 	
 	public Healthbox(int x, int y, boolean isActive, Player player, int healthUp) {
 		//x and y for the spawning coordinates
 	}
 	
 	public void addHealth(Player player) {
-		
-	}
-	@Override
-	public boolean collidedWithPlayer() {
-		return false;
+		int health = 30;
 	}
 	@Override
 	public void setActive() {
@@ -23,5 +22,11 @@ public class Healthbox extends Pickup{
 	@Override
 	public void deactivate() {
 		isActive = false;
+	}
+
+	@Override
+	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
+		// TODO Auto-generated method stub
+		
 	}
 }

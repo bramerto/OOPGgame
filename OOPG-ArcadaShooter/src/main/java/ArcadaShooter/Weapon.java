@@ -1,16 +1,23 @@
 package ArcadaShooter;
 
+import java.util.List;
+
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
+
 public class Weapon extends Pickup{
-	int damage;
-	public boolean isActive;
+	private Player player;
 	
 	public Weapon(){
 		
 	}
 	@Override
-	public boolean collidedWithPlayer() {
-		return false;
-	}
+	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
+        for (GameObject g:collidedGameObjects) {
+            if (g instanceof Player) {
+                
+            }
+        }
+    }
 	@Override
 	public void setActive() {
 		isActive = true;
@@ -18,6 +25,6 @@ public class Weapon extends Pickup{
 	@Override
 	public void deactivate() {
 		isActive = false;
-	}		
+	}
 }
 

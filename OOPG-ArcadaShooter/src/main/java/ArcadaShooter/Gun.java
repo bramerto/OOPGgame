@@ -1,10 +1,7 @@
 package ArcadaShooter;
 
 public class Gun extends Weapon{
-	int x; 	//random coordinates voor spawn
-	int y;
-	Player player;
-	int damage = 50;
+	private Bullet[] bullets;
 	boolean isEquipped;
 	
 	public Gun() {
@@ -15,8 +12,8 @@ public class Gun extends Weapon{
 		
 	}
 	
-	public void doDamage(int damage) {
-		
+	public void doDamage() {
+		int damage = 10;
 	}
 	
 	public boolean isEquipped() {

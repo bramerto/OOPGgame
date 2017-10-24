@@ -1,6 +1,8 @@
 package ArcadaShooter;
 
-public class Immunity extends Pickup{
+import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
+
+public class Immunity extends Pickup implements IAlarmListener{
 	public boolean isActive;
 	public Player player;
 	public int timer;
@@ -24,5 +26,10 @@ public class Immunity extends Pickup{
 	@Override
 	public boolean collidedWithPlayer() {
 		return false;
+	}
+	@Override
+	public void triggerAlarm(String alarmName) {
+		// TODO Auto-generated method stub
+		
 	}
 }
