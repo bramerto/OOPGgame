@@ -11,22 +11,23 @@ import nl.han.ica.OOPDProcessingEngineHAN.Exceptions.TileNotFoundException;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.AnimatedSpriteObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
-import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
-import nl.han.ica.waterworld.tiles.BoardsTile;
 import processing.core.PVector;
 
-public class Player extends SpriteObject implements ICollidableWithGameObjects, ICollidableWithTiles {
+public class Player extends AnimatedSpriteObject implements ICollidableWithGameObjects, ICollidableWithTiles {
 
 	private ArcadaShooter world;
-	final int size = 25;
+	private final int size = 50;
     private Random r;
+    private Crosshair crosshair;
+    private int health;
     
 	public Player(ArcadaShooter world) {
-		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
+		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
 		this.world = world;
-		setFriction(0.03f);
-		setGravity(0.10f);
+		setGravity(0.8f);
         this.r = new Random();
+        this.health = 100;
+        this.crosshair = new Crosshair(new Sprite("src/main/java/ArcadaShooter/media/crosshair.png"));
 	}
 	
 	@Override
@@ -83,8 +84,11 @@ public class Player extends SpriteObject implements ICollidableWithGameObjects, 
 
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
-		// TODO Auto-generated method stub
-
+		for (GameObject g:collidedGameObjects) {
+            if (g instanceof EasyEnemy) {
+            	
+            }
+        }
 	}
 
 	@Override
@@ -97,34 +101,41 @@ public class Player extends SpriteObject implements ICollidableWithGameObjects, 
             setySpeed(0);
             setY(0);
         }
-        if (getX()>=world.getWidth()-size) {
+        if (getX()>=ArcadaShooter.WORLDWIDTH-size) {
             setxSpeed(0);
-            setX(world.getWidth() - size);
+            setX(ArcadaShooter.WORLDWIDTH - size);
         }
-        if (getY()>=world.getHeight()-size) {
+        if (getY()>=ArcadaShooter.WORLDHEIGHT-size) {
             setySpeed(0);
-            setY(world.getHeight() - size);
+            setY(ArcadaShooter.WORLDHEIGHT - size);
         }
 	}
 	
-	public void keyPressed(int keyCode, char key) {
+	public void keyPressed(int keyCode, char key) { //TODO: registering two keys
         final int speed = 5;
-        if (keyCode == world.LEFT) {
+        if (key == 'a' || keyCode == world.LEFT) {
             setDirectionSpeed(270, speed);
+            setCurrentFrameIndex(1);
         }
-        if (keyCode == world.UP) {
-            setDirectionSpeed(0, speed);
+        if (key == 'w' || keyCode == world.UP) {
+            setDirectionSpeed(0, 20);
         }
-        if (keyCode == world.RIGHT) {
+        if (key == 'd' || keyCode == world.RIGHT) {
             setDirectionSpeed(90, speed);
+            setCurrentFrameIndex(0);
         }
-        if (keyCode == world.DOWN) {
-            setDirectionSpeed(180, speed);
-        }
-        
-        
         if (key == ' ') {
             System.out.println("Spatie!");
         }
     }
+	
+	@Override
+	public void mouseMoved(int x, int y) {
+        world.addGameObject(crosshair, x, y);
+        //set direction of weapon and bullet
+    }
+	
+	public void mouseClicked() {
+		// do action of equiped weapon
+	}
 }
