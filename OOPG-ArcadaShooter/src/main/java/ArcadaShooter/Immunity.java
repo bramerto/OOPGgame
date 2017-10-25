@@ -1,6 +1,8 @@
 package ArcadaShooter;
 
 import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
+import processing.core.PGraphics;
 
 public class Immunity extends Pickup implements IAlarmListener{
 	public boolean isActive;
@@ -8,7 +10,7 @@ public class Immunity extends Pickup implements IAlarmListener{
 	public int timer;
 	
 	public Immunity(boolean isActive, Player player, int timer) {
-		
+		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
 	}
 	@Override
 	public void setActive() {
@@ -24,11 +26,22 @@ public class Immunity extends Pickup implements IAlarmListener{
 		isActive = false;
 	}
 	@Override
-	public boolean collidedWithPlayer() {
-		return false;
+	public void triggerAlarm(String alarmName) {
+		// TODO Auto-generated method stub
+		
 	}
 	@Override
-	public void triggerAlarm(String alarmName) {
+	public void doAction() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void draw(PGraphics g) {
 		// TODO Auto-generated method stub
 		
 	}

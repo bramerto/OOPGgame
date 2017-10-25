@@ -3,17 +3,16 @@ package ArcadaShooter;
 import java.util.List;
 
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
+import processing.core.PGraphics;
 
 public class Healthbox extends Pickup{
 	private boolean isActive;
 	private Player player;
 	
-	public Healthbox(int x, int y, boolean isActive, Player player, int healthUp) {
+	public Healthbox() {
 		//x and y for the spawning coordinates
-	}
-	
-	public void addHealth(Player player) {
-		int health = 30;
+		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
 	}
 	@Override
 	public void setActive() {
@@ -23,9 +22,18 @@ public class Healthbox extends Pickup{
 	public void deactivate() {
 		isActive = false;
 	}
-
 	@Override
-	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
+	public void doAction() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void draw(PGraphics g) {
 		// TODO Auto-generated method stub
 		
 	}
