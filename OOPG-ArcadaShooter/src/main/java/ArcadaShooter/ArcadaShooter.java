@@ -8,9 +8,8 @@ import nl.han.ica.OOPDProcessingEngineHAN.Tile.TileType;
 import nl.han.ica.OOPDProcessingEngineHAN.View.EdgeFollowingViewport;
 import nl.han.ica.OOPDProcessingEngineHAN.View.View;
 import ArcadaShooter.Player;
-import nl.han.ica.waterworld.BubbleStopperTile;
+import ArcadaShooter.tiles.NormalTile;
 import nl.han.ica.waterworld.TextObject;
-import nl.han.ica.waterworld.tiles.BoardsTile;
 import processing.core.PApplet;
 
 public class ArcadaShooter extends GameEngine {
@@ -73,9 +72,9 @@ public class ArcadaShooter extends GameEngine {
         /* TILES */
         Sprite tileSprite = new Sprite("src/main/java/nl/han/ica/waterworld/media/boards.jpg");
 
-        TileType<BoardsTile> boardTileType = new TileType<>(BoardsTile.class, tileSprite);
+        TileType<NormalTile> normalTileType = new TileType<>(NormalTile.class, tileSprite);
 
-        TileType[] tileTypes = { boardTileType };
+        TileType[] tileTypes = { normalTileType };
         int tileSize=50;
         int tilesMap[][]={
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -84,7 +83,7 @@ public class ArcadaShooter extends GameEngine {
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
