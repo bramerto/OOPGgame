@@ -7,21 +7,12 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import processing.core.PGraphics;
 
 public class Weapon extends Pickup{
-	private Player player;
 	
 	public Weapon(){
 		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
 	}
 	@Override
-	public void setActive() {
-		isActive = true;
-	}
-	@Override
-	public void deactivate() {
-		isActive = false;
-	}
-	@Override
-	public void doAction() {
+	public void doAction(Player player) {
 		// TODO Auto-generated method stub
 		
 	}

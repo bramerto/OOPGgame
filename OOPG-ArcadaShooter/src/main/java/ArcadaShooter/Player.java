@@ -19,7 +19,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	private final int size = 50;
     private Random r;
     private Crosshair crosshair;
-    private int health;
+    public int health, ammo;
     
 	public Player(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
@@ -87,6 +87,9 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 		for (GameObject g:collidedGameObjects) {
             if (g instanceof EasyEnemy) {
             	
+            }
+            if (g instanceof Pickup) {
+            	((Pickup) g).doAction(this);
             }
         }
 	}
