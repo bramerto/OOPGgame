@@ -4,12 +4,14 @@ import nl.han.ica.OOPDProcessingEngineHAN.Dashboard.Dashboard;
 
 import nl.han.ica.OOPDProcessingEngineHAN.Engine.GameEngine;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
+import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
 import nl.han.ica.OOPDProcessingEngineHAN.Tile.TileMap;
 import nl.han.ica.OOPDProcessingEngineHAN.Tile.TileType;
 import nl.han.ica.OOPDProcessingEngineHAN.View.CenterFollowingViewport;
 import nl.han.ica.OOPDProcessingEngineHAN.View.View;
 import ArcadaShooter.Player;
 import ArcadaShooter.tiles.NormalTile;
+import nl.han.ica.waterworld.BubbleSpawner;
 import nl.han.ica.waterworld.TextObject;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -17,8 +19,10 @@ import processing.core.PImage;
 public class ArcadaShooter extends GameEngine {
 	
 	private TextObject dashboardText;
+	private Sound pickupSound;
 	private Player player;
 	private MediumEnemy enemy;
+	private PickupSpawner pickupSpawner;
 	public static final int WORLDWIDTH = 3000;
 	public static final int WORLDHEIGHT=750;
 
@@ -32,11 +36,16 @@ public class ArcadaShooter extends GameEngine {
         createDashboard(WORLDWIDTH, 100);
         initializeTileMap();
 //        initializePersistence();
+        createPickupsPawner();
         createObjects();
 
         createViewWithViewport(WORLDWIDTH, WORLDHEIGHT, 1000, 600, 1);
 	}
 	
+	private void createPickupsPawner() {
+		pickupSpawner=new PickupSpawner(this,pickupSound,(float) 1);
+	}
+
 	/**
      * Creates a view with a viewport
      * @param worldWidth Total width of world

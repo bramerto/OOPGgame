@@ -106,6 +106,9 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
             	if (g instanceof Pickup) {
             		((Pickup)g).doAction(this);
             }
+            if (g instanceof Pickup) {
+            	((Pickup) g).doAction(this);
+            }
         }
 	}
 	
@@ -154,7 +157,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
     }
 	
 	public void mouseClicked() {
-		selectedWeapon.doAction();
+		selectedWeapon.doAction(this);
 	}
 
 	public int getAmmo() {
@@ -170,6 +173,6 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	}
 
 	public void setHealth(int health) {
-		this.ammo = health;
+		this.health = health;
 	}
 }

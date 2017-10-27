@@ -1,42 +1,53 @@
 package ArcadaShooter;
 
-import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
-import processing.core.PGraphics;
+import java.util.List;
 
-public class Ammobox extends Pickup{
-	public boolean isActive;
-	public int ammoUp = 60;
+import ArcadaShooter.tiles.NormalTile;
+import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
+import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
+import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
+import nl.han.ica.OOPDProcessingEngineHAN.Exceptions.TileNotFoundException;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
+import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
+import processing.core.PGraphics;
+import processing.core.PVector;
+
+public class Ammobox extends Pickup implements ICollidableWithTiles {
+	private final Sound pickupSound;
+    private ArcadaShooter world;
 	
-	public Ammobox(int x, int y, boolean isActive, Player player, int ammoUp) {
-		//x and y for the spawning coordinates
-		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
+	public Ammobox(ArcadaShooter world, Sound pickupSound) {
+		super(new Sprite("src/main/java/ArcadaShooter/media/pickup_ammobox.png"));
+		this.pickupSound=pickupSound;
+        this.world=world;
+        setGravity(0.3f);
 	}
-	public void addAmmo(Player player) {
-		// add ammo and deactivate
-		deactivate();
-	}
+	
 	@Override
-	public void deactivate() {
-		isActive = false;
+	public void doAction(Player player) {
+		System.out.println(player.getAmmo());
+		player.setAmmo(player.getAmmo() + 10);
+		world.deleteGameObject(this);
 	}
-	@Override
-	public void doAction() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
+	
 	@Override
-	public void draw(PGraphics g) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void setActive() {
-		// TODO Auto-generated method stub
-		
+	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
+		PVector vector;
+		for (CollidedTile ct : collidedTiles) {
+			if (ct.theTile instanceof NormalTile) {
+				try {
+					setGravity(0f);
+                    vector = world.getTileMap().getTilePixelLocation(ct.theTile);
+                    setY(vector.y - getHeight());
+                } catch (TileNotFoundException e) {
+                    e.printStackTrace();
+                }
+			}
+        }
 	}
 }
