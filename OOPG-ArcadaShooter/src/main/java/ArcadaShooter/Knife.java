@@ -1,13 +1,13 @@
 package ArcadaShooter;
 
 public class Knife extends Weapon {
-	private int damage = 30;
+	private int damage;
 	private boolean isEquipped;
 	
-	public Knife(Player player, int damage) {
-		
+	public Knife() {
+		damage = 30;
 	}
-	
+
 	public void doDamage(Player player) {
 		
 	}

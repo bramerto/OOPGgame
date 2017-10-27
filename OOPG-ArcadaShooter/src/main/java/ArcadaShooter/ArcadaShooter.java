@@ -12,6 +12,7 @@ import ArcadaShooter.Player;
 import ArcadaShooter.tiles.NormalTile;
 import nl.han.ica.waterworld.TextObject;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class ArcadaShooter extends GameEngine {
 	
@@ -27,7 +28,6 @@ public class ArcadaShooter extends GameEngine {
 	
 	@Override
 	public void setupGame() {
-
 //        initializeSound();
         createDashboard(WORLDWIDTH, 100);
         initializeTileMap();
@@ -70,7 +70,7 @@ public class ArcadaShooter extends GameEngine {
 	    	enemy = new MediumEnemy(this);
 	    	
 	    	addGameObject(player, 100, 620);
-	    	addGameObject(enemy, 100, 640);
+	    	addGameObject(enemy, 500, 640);
     }
     
     private void initializeTileMap() {
@@ -105,7 +105,8 @@ public class ArcadaShooter extends GameEngine {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		PImage img = loadImage("src/main/java/ArcadaShooter/media/crosshair.png");
+		cursor(img);
+		
 	}
 }

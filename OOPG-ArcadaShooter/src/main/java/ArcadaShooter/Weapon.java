@@ -12,15 +12,17 @@ public class Weapon extends Pickup{
 	public Weapon(){
 		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
 	}
+	
 	@Override
 	public void setActive() {
 		isActive = true;
 	}
+	
 	@Override
 	public void deactivate() {
 		isActive = false;
 	}
-	@Override
+	
 	public void doAction() {
 		// TODO Auto-generated method stub
 		

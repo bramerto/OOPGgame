@@ -18,26 +18,36 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	private ArcadaShooter world;
 	private final int size = 50;
     private Random r;
-    private Crosshair crosshair;
-    private int health;
+    private int health, ammo;
+    private float aimx, aimy, aimdx, aimdy;
+    private Weapon[] weapons = { new Knife(), new Gun()};
+    private Weapon selectedWeapon;
     
 	public Player(ArcadaShooter world) {
-		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
+		this(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
 		this.world = world;
-		setGravity(0.8f);
-        this.r = new Random();
+	}
+	
+	private Player(Sprite sprite) {
+		super(sprite, 2);
+		this.selectedWeapon = weapons[0];
         this.health = 100;
-        this.crosshair = new Crosshair(new Sprite("src/main/java/ArcadaShooter/media/crosshair.png"));
+        this.r = new Random();
+        setGravity(0.8f);
 	}
 	
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;
+		
+		if (health<=0) {
+			world.exit();
+		}
 
         for (CollidedTile ct : collidedTiles) {
             if (ct.theTile instanceof NormalTile) {
             	
-                if (ct.collisionSide == ct.TOP) {
+                if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
                     try {
                         vector = world.getTileMap().getTilePixelLocation(ct.theTile);
                         setY(vector.y - getHeight());
@@ -81,16 +91,24 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
             }
         }
 	}
+	
+	public void switchWeapon() {
+		selectedWeapon = (selectedWeapon instanceof Knife) ? weapons[1] : weapons[0];
+	}
+	
+	public void receiveDamage(int damage) {
+		health -= damage;
+	}
 
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for (GameObject g:collidedGameObjects) {
-            if (g instanceof EasyEnemy) {
-            	
+            	if (g instanceof Pickup) {
+            		((Pickup)g).doAction(this);
             }
         }
 	}
-
+	
 	@Override
 	public void update() {
 		if (getX()<=0) {
@@ -111,7 +129,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         }
 	}
 	
-	public void keyPressed(int keyCode, char key) { //TODO: registering two keys
+	public void keyPressed(int keyCode, char key) { //TODO: registering two keys with keyReleased();
         final int speed = 5;
         if (key == 'a' || keyCode == world.LEFT) {
             setDirectionSpeed(270, speed);
@@ -131,11 +149,27 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	
 	@Override
 	public void mouseMoved(int x, int y) {
-        world.addGameObject(crosshair, x, y);
-        //set direction of weapon and bullet
+        aimx = x;
+        aimy = y;
     }
 	
 	public void mouseClicked() {
-		// do action of equiped weapon
+		selectedWeapon.doAction();
+	}
+
+	public int getAmmo() {
+		return ammo;
+	}
+
+	public void setAmmo(int ammo) {
+		this.ammo = ammo;
+	}
+	
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.ammo = health;
 	}
 }

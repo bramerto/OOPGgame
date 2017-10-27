@@ -34,7 +34,9 @@ public abstract class Pickup extends SpriteObject implements IAlarmListener {
     }
 	public abstract void setActive();
 	
-	public abstract void doAction();
+	public void doAction(Player player) {
+		
+	}
 	
 	public void delete(ArcadaShooter world) {
 		world.deleteGameObject(this);

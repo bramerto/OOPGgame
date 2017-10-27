@@ -35,7 +35,7 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		for (CollidedTile ct : collidedTiles) {
             if (ct.theTile instanceof NormalTile) {
             	
-                if (ct.collisionSide == ct.TOP) {
+                if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
                     try {
                         vector = world.getTileMap().getTilePixelLocation(ct.theTile);
                         setY(vector.y - getHeight());
@@ -78,14 +78,18 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
                 }
             }
         }
-
 	}
 	
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
-		//do damage to player if collision for easy and medium enemies
+		for (GameObject g:collidedGameObjects) {
+			if (g instanceof Player) {
+	    			((Player)g).receiveDamage(damage);
+			}
+		}
 	}
 
 	@Override
 	public void update() {
+		
 	}
 }

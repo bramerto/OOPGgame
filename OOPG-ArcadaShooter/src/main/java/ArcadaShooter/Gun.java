@@ -1,19 +1,15 @@
 package ArcadaShooter;
 
-public class Gun extends Weapon{
+public class Gun extends Weapon {
 	private Bullet[] bullets;
 	boolean isEquipped;
 	
 	public Gun() {
-		
+		int damage = 10;
 	}
 	
 	public void shoot(Bullet[] bullets) {
 		
-	}
-	
-	public void doDamage() {
-		int damage = 10;
 	}
 	
 	public boolean isEquipped() {
