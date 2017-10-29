@@ -29,6 +29,7 @@ public class Healthbox extends Pickup implements ICollidableWithTiles {
 	public void doAction(Player player) {
 		player.setHealth(player.getHealth() + 10);
 		world.deleteGameObject(this);
+		world.refreshDashboard();
 	}
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {

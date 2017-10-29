@@ -29,6 +29,7 @@ public class Ammobox extends Pickup implements ICollidableWithTiles {
 		System.out.println(player.getAmmo());
 		player.setAmmo(player.getAmmo() + 10);
 		world.deleteGameObject(this);
+		world.refreshDashboard();
 	}
 	
 	@Override

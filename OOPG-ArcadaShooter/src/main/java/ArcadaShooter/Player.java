@@ -17,11 +17,12 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
 	private ArcadaShooter world;
 	private final int size = 50;
-    private Random r;
+	private boolean jumped;
     private int health, ammo;
-    private float aimx, aimy, aimdx, aimdy;
+    private float aimx, aimy, aimAngle;
     private Weapon[] weapons = { new Knife(), new Gun()};
     private Weapon selectedWeapon;
+    private Random r;
     
 	public Player(ArcadaShooter world) {
 		this(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
@@ -33,24 +34,22 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 		this.selectedWeapon = weapons[0];
         this.health = 100;
         this.r = new Random();
+        this.jumped = false;
         setGravity(0.8f);
 	}
 	
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;
-		
-		if (health<=0) {
-			world.exit();
-		}
 
-        for (CollidedTile ct : collidedTiles) {
+		for (CollidedTile ct : collidedTiles) {
             if (ct.theTile instanceof NormalTile) {
-            	
-                if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
+            	if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
                     try {
                         vector = world.getTileMap().getTilePixelLocation(ct.theTile);
                         setY(vector.y - getHeight());
+                        jumped = false;
+                        
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -59,8 +58,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
                 if (ct.collisionSide == ct.BOTTOM) {
                     try {
 						vector = world.getTileMap().getTilePixelLocation(ct.theTile);
-	    					setySpeed(0);
-	    					setY(vector.y + 50);
+    					setySpeed(0);
+    					setY(vector.y + 50);
 		                
 					} catch (TileNotFoundException e) {
 						e.printStackTrace();
@@ -70,8 +69,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
                 if (ct.collisionSide == ct.LEFT) {
                     try {
 						vector = world.getTileMap().getTilePixelLocation(ct.theTile);
-	    					setxSpeed(0);
-	    					setX(vector.x - 50);
+    					setxSpeed(0);
+    					setX(vector.x - 50);
 		                
 					} catch (TileNotFoundException e) {
 						e.printStackTrace();
@@ -81,8 +80,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
                 if (ct.collisionSide == ct.RIGHT) {
                     try {
 						vector = world.getTileMap().getTilePixelLocation(ct.theTile);
-	    					setxSpeed(0);
-	    					setX(vector.x + 50);
+    					setxSpeed(0);
+    					setX(vector.x + 50);
 		                
 					} catch (TileNotFoundException e) {
 						e.printStackTrace();
@@ -98,37 +97,40 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	
 	public void receiveDamage(int damage) {
 		health -= damage;
+		world.refreshDashboard();
 	}
 
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for (GameObject g:collidedGameObjects) {
-            	if (g instanceof Pickup) {
-            		((Pickup)g).doAction(this);
-            }
-            if (g instanceof Pickup) {
-            	((Pickup) g).doAction(this);
+        	if (g instanceof Pickup) {
+        		((Pickup)g).doAction(this);
             }
         }
 	}
 	
 	@Override
 	public void update() {
-		if (getX()<=0) {
+		
+		if (health<=0) {
+			world.exit();
+		}
+		
+		if (getX() <= 0) {
             setxSpeed(0);
             setX(0);
         }
-        if (getY()<=0) {
+        if (getY() <= 0) {
             setySpeed(0);
             setY(0);
         }
-        if (getX()>=ArcadaShooter.WORLDWIDTH-size) {
+        if (getX() >= world.WORLDWIDTH-size) {
             setxSpeed(0);
-            setX(ArcadaShooter.WORLDWIDTH - size);
+            setX(world.WORLDWIDTH - size);
         }
-        if (getY()>=ArcadaShooter.WORLDHEIGHT-size) {
+        if (getY() >= world.WORLDHEIGHT-size) {
             setySpeed(0);
-            setY(ArcadaShooter.WORLDHEIGHT - size);
+            setY(world.WORLDHEIGHT - size);
         }
 	}
 	
@@ -138,8 +140,9 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
             setDirectionSpeed(270, speed);
             setCurrentFrameIndex(1);
         }
-        if (key == 'w' || keyCode == world.UP) {
-            setDirectionSpeed(0, 20);
+        if ((key == 'w' || keyCode == world.UP) && !jumped) {
+            setDirectionSpeed(0, 25);
+            jumped = true;
         }
         if (key == 'd' || keyCode == world.RIGHT) {
             setDirectionSpeed(90, speed);
@@ -154,6 +157,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	public void mouseMoved(int x, int y) {
         aimx = x;
         aimy = y;
+        //TODO: calculate angle ??
     }
 	
 	public void mouseClicked() {

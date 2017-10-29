@@ -1,7 +1,6 @@
 package ArcadaShooter;
 
 import nl.han.ica.OOPDProcessingEngineHAN.Dashboard.Dashboard;
-
 import nl.han.ica.OOPDProcessingEngineHAN.Engine.GameEngine;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
@@ -9,41 +8,47 @@ import nl.han.ica.OOPDProcessingEngineHAN.Tile.TileMap;
 import nl.han.ica.OOPDProcessingEngineHAN.Tile.TileType;
 import nl.han.ica.OOPDProcessingEngineHAN.View.CenterFollowingViewport;
 import nl.han.ica.OOPDProcessingEngineHAN.View.View;
-import ArcadaShooter.Player;
 import ArcadaShooter.tiles.NormalTile;
-import nl.han.ica.waterworld.BubbleSpawner;
-import nl.han.ica.waterworld.TextObject;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 public class ArcadaShooter extends GameEngine {
 	
-	private TextObject dashboardText;
+	private TextObject healthText;
+	private TextObject ammoText;
+	private TextObject waveText;
 	private Sound pickupSound;
 	private Player player;
 	private MediumEnemy enemy;
 	private PickupSpawner pickupSpawner;
-	public static final int WORLDWIDTH = 3000;
-	public static final int WORLDHEIGHT=750;
+	private EnemySpawner enemySpawner;
+	public final int WORLDWIDTH = 3000;
+	public final int WORLDHEIGHT = 750;
+	private PImage img;
 
 	public static void main(String[] args) {
 		PApplet.main(new String[]{ArcadaShooter.class.getName()});
 	}
 	
-	@Override
-	public void setupGame() {
-//        initializeSound();
-        createDashboard(WORLDWIDTH, 100);
-        initializeTileMap();
-//        initializePersistence();
-        createPickupsPawner();
-        createObjects();
-
-        createViewWithViewport(WORLDWIDTH, WORLDHEIGHT, 1000, 600, 1);
+	public void setupWorldVariables() {
+		img = loadImage("src/main/java/ArcadaShooter/media/crosshair.png");
 	}
 	
-	private void createPickupsPawner() {
-		pickupSpawner=new PickupSpawner(this,pickupSound,(float) 1);
+	@Override
+	public void setupGame() {
+		setupWorldVariables();
+//        initializeSound();
+        initializeTileMap();
+        createSpawners();
+        createObjects();
+        cursor(img);
+
+        createViewWithViewport(WORLDWIDTH, WORLDHEIGHT, 1280, 720, 1);
+	}
+	
+	private void createSpawners() {
+		pickupSpawner = new PickupSpawner(this,pickupSound,(float) 0.1);
+		enemySpawner = new EnemySpawner(this);
 	}
 
 	/**
@@ -62,46 +67,58 @@ public class ArcadaShooter extends GameEngine {
         size(screenWidth, screenHeight);
         view.setBackground(loadImage("src/main/java/ArcadaShooter/media/level.png"));
     }
+    
     /**
      * Creates a dashboard
      * @param dashboardWidth Width of dashboard
      * @param dashboardHeight Height of dashboard
      */
     private void createDashboard(int dashboardWidth,int dashboardHeight) {
-        Dashboard dashboard = new Dashboard(0,0, dashboardWidth, dashboardHeight);
-        dashboardText=new TextObject("test");
-        dashboard.addGameObject(dashboardText);
-        addDashboard(dashboard);
+        Dashboard healthDashboard = new Dashboard(0,0, dashboardWidth, dashboardHeight);
+        Dashboard ammoDashboard = new Dashboard(0,25, dashboardWidth, dashboardHeight);
+        Dashboard waveDashboard = new Dashboard(0,50, dashboardWidth, dashboardHeight);
+        
+        healthText = new TextObject("Health: " + player.getHealth());
+        ammoText = new TextObject("Ammo: " + player.getAmmo());
+        waveText = new TextObject("Wave: " + enemySpawner.getWave());
+        
+        healthDashboard.addGameObject(healthText);
+        ammoDashboard.addGameObject(ammoText);
+        waveDashboard.addGameObject(waveText);
+        
+        addDashboard(healthDashboard);
+        addDashboard(ammoDashboard);
+        addDashboard(waveDashboard);
     }
     
     private void createObjects() {
-	    	player = new Player(this);
-	    	enemy = new MediumEnemy(this);
-	    	
-	    	addGameObject(player, 100, 620);
-	    	addGameObject(enemy, 500, 640);
+    	player = new Player(this);
+    	Enemy testEnemy = new HardEnemy(this);
+    	addGameObject(player, 100, 620);
+    	addGameObject(testEnemy, 700, 620);
+    	
+    	createDashboard(WORLDWIDTH, 100);
     }
     
     private void initializeTileMap() {
-        /* TILES */
         Sprite tileSprite = new Sprite("src/main/java/ArcadaShooter/media/tile.jpg");
 
         TileType<NormalTile> normalTileType = new TileType<>(NormalTile.class, tileSprite);
 
         TileType[] tileTypes = { normalTileType };
-        int tileSize=50;
-        int tilesMap[][]={
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-                {-1,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+        int tileSize = 50;
+        int tilesMap[][] = {
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1, 0, 0, 0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -110,12 +127,19 @@ public class ArcadaShooter extends GameEngine {
         
         tileMap = new TileMap(tileSize, tileTypes, tilesMap);
     }
-
+    
+    public Player getPlayer() {
+    	return player;
+    }
+    
+    public void refreshDashboard() {
+    	healthText.setText("Health: " + player.getHealth());
+    	ammoText.setText("Ammo: " + player.getAmmo());
+    	waveText.setText("Wave: " + enemySpawner.getWave());
+    }
 
 	@Override
 	public void update() {
-		PImage img = loadImage("src/main/java/ArcadaShooter/media/crosshair.png");
-		cursor(img);
 		
 	}
 }

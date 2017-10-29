@@ -5,8 +5,8 @@ import java.util.List;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 
 public class MediumEnemy extends Enemy {
-
+	
 	public MediumEnemy(ArcadaShooter world) {
-		super(world, 10);
+		super(world, 10, 0.5f, new Knife());
 	}
 }
