@@ -9,7 +9,7 @@ public class HardEnemy extends Enemy {
 	private Weapon weapon;
 	
 	public HardEnemy(ArcadaShooter world) {
-		super(world, 20, 0.2f, new Gun());
+		super(world, 20, 0.2f, new Gun(world, null));
 	}
 	
 	@Override

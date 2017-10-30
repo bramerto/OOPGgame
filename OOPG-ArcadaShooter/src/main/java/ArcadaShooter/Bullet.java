@@ -2,23 +2,25 @@ package ArcadaShooter;
 
 import java.util.List;
 
+import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
+import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
+import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 import nl.han.ica.waterworld.Player;
 import nl.han.ica.waterworld.Swordfish;
 
-public class Bullet {
+public class Bullet extends SpriteObject implements ICollidableWithTiles, ICollidableWithGameObjects{
 	private boolean collidedWithEnemy;
 	private Bullet[] bullets;
-	private boolean hasAmmo;
 	
 	public Bullet() {
+		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
+	}
+	public void shoot(ArcadaShooter world, Player player) {
 		
 	}
-	
-	public boolean hasAmmo() {
-		return false;
-	}
-	
 	public boolean collidedWithEnemy(int x, int y, Enemy enemy) {
 		return false;
 	}
@@ -32,5 +34,16 @@ public class Bullet {
             }
         }
     }
+
+	@Override
+	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
