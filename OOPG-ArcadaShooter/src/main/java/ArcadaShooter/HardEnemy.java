@@ -1,7 +1,5 @@
 package ArcadaShooter;
 
-import java.util.List;
-
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 
 public class HardEnemy extends Enemy {
@@ -15,6 +13,11 @@ public class HardEnemy extends Enemy {
 		this.target = world.getPlayer();
 		double distance = Math.hypot(target.getX()-this.x, target.getY()-this.y);
 		
+		if (health <= 0) {
+			EnemySpawner.currentEnemiesOnLevel--;
+			world.deleteGameObject(this);
+		}
+		
 		if (distance > 500) {
 			if (target.getX() > this.x) {
 				setDirectionSpeed(90, speed);
@@ -25,9 +28,8 @@ public class HardEnemy extends Enemy {
 				setCurrentFrameIndex(1);
 			}
 		} else {
+//			((Gun)weapon).doAction((GameObject)this, target.getX(), target.getY());
 			setDirectionSpeed(0, 0);
-
-			((Gun)weapon).doAction((GameObject)this, target.getX(), target.getY());
 		}
 	}
 }

@@ -1,9 +1,5 @@
 package ArcadaShooter;
 
-import java.util.List;
-
-import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
-import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.AnimatedSpriteObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;

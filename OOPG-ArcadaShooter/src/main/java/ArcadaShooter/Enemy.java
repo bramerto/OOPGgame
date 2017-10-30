@@ -20,7 +20,7 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 	protected float speed;
 	private int damageDelay;
 	protected Weapon weapon;
-	private int health;
+	protected int health;
 	private boolean jumped;
 	
 	public Enemy(ArcadaShooter world, int damage, float speed, Weapon weapon) {
@@ -33,6 +33,7 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		this.jumped = false;
 		damageDelay = 0;
 		setGravity(0.8f);
+		if (weapon != null) world.addGameObject(weapon, getX() + 35, getY() + 25);
 	}
 
 	@Override
@@ -89,10 +90,27 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		} else if (target.getX() > this.x) {
 			setDirectionSpeed(90, speed);
 			setCurrentFrameIndex(0);
+			setWeaponFrame(0);
 			
 		} else if (target.getX() < this.x) {
 			setDirectionSpeed(270, speed);
 			setCurrentFrameIndex(1);
+			setWeaponFrame(1);
+		}
+	}
+	
+	private void setWeaponFrame(int direction) {
+		if (weapon != null) {
+			if (direction == 0) {
+				weapon.setCurrentFrameIndex(0);
+				weapon.setX(getX() + 35);
+				weapon.setY(getY() + 25);
+			} else {
+				weapon.setCurrentFrameIndex(1);
+				weapon.setX(getX() - 20);
+				weapon.setY(getY() + 25);
+			}
+			
 		}
 	}
 	

@@ -14,6 +14,7 @@ public class EnemySpawner implements IAlarmListener {
 	private boolean waveIsSpawned;
 	private Random r;
 	public static int currentEnemiesOnLevel;
+	private int enemiesSpawnedThisWave;
 	
 	public EnemySpawner(ArcadaShooter world) {
 		this.world = world;
@@ -22,6 +23,7 @@ public class EnemySpawner implements IAlarmListener {
 		this.wave = 1;
 		this.r = new Random();
 		this.waveIsSpawned = false;
+		this.enemiesSpawnedThisWave = 0;
 		currentEnemiesOnLevel = 0;
 		startAlarm();
 	}
@@ -29,26 +31,26 @@ public class EnemySpawner implements IAlarmListener {
 	@Override
 	public void triggerAlarm(String alarmName) {
 		
-		System.out.println(currentEnemiesOnLevel);
-		
 		if (currentEnemiesOnLevel < enemiesPerWave && !waveIsSpawned) {
-			Enemy[] enemies = { new EasyEnemy(world), new MediumEnemy(world)  };
+			Enemy[] enemies = { new EasyEnemy(world) };
+		
+			if (wave > 5) enemies[1] = new MediumEnemy(world);
+			if (wave > 10) enemies[2] = new HardEnemy(world);
+			
 			int randomIndex = r.nextInt(enemies.length);
-			int randomXPos = r.nextInt();
-	        world.addGameObject(enemies[randomIndex], 3000 - 50,  620);
+	        world.addGameObject(enemies[randomIndex], 1000 - 50,  620);
 	        
-	        System.out.println("zombie spawned"); //remove when done debugging
-	        
-	        if (currentEnemiesOnLevel == enemiesPerWave) {
+	        if (enemiesSpawnedThisWave == enemiesPerWave - 1) {
         		waveIsSpawned = true;
 	        } else {
         		currentEnemiesOnLevel++;
+        		enemiesSpawnedThisWave++;
 	        }
 	        
-		} else if (currentEnemiesOnLevel == 0) {
-			System.out.println("new wave!"); //remove when done debugging
+		} else if (currentEnemiesOnLevel <= 0) {
 			enemiesPerWave += 5;
 			waveIsSpawned = false;
+			enemiesSpawnedThisWave = 0;
 			wave++;
 			world.refreshDashboard();
 		}

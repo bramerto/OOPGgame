@@ -7,7 +7,6 @@ import ArcadaShooter.tiles.NormalTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
-import nl.han.ica.OOPDProcessingEngineHAN.Engine.GameEngine;
 import nl.han.ica.OOPDProcessingEngineHAN.Exceptions.TileNotFoundException;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.AnimatedSpriteObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
@@ -21,22 +20,21 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	private boolean jumped, turned;
     private int health, ammo;
     private float aimX, aimY;
-    private Weapon[] weapons;
     public Weapon selectedWeapon;
     private Random r;
     
 	public Player(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
-		//this.setSelectedWeapon(weapons[0]);
-		//this.weapons[0] = new Knife(world);
-		//this.weapons[1] = new Gun(world);
-		this.selectedWeapon = new Gun(world);
+		this.selectedWeapon = new Knife(world);
         this.health = 100;
         this.r = new Random();
         this.jumped = false;
         this.turned = false;
+        this.ammo = 200;
         setGravity(0.8f);
+        setFriction(0.1f);
 		this.world = world;
+		this.world.addGameObject(selectedWeapon, getX() + 35, getY() + 25);
 	}
 
 	@Override
@@ -93,7 +91,16 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	}
 	
 	public void switchWeapon() {
-		selectedWeapon = (selectedWeapon instanceof Knife) ? weapons[1] : weapons[0];
+		if (selectedWeapon instanceof Knife) {
+			world.deleteGameObject(selectedWeapon);
+			selectedWeapon = new Gun(world);
+			world.addGameObject(selectedWeapon);
+			
+		} else {
+			world.deleteGameObject(selectedWeapon);
+			selectedWeapon = new Knife(world);
+			world.addGameObject(selectedWeapon);
+		}
 	}
 	
 	public void receiveDamage(int damage) {
@@ -112,7 +119,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	
 	@Override
 	public void update() {
-		if (turned) { //TODO: gravity on gun
+		if (turned) { //TODO: fix gravity on weapon
 			selectedWeapon.setX(getX() - 20);
 			selectedWeapon.setY(getY() + 25);
 		} else {
@@ -150,8 +157,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
             selectedWeapon.setCurrentFrameIndex(1);
             turned = true;
         }
-        if ((key == 'w' || keyCode == world.UP) && !jumped) {
-            setDirectionSpeed(0, 25);
+        if ((key == 'w' || keyCode == world.UP || key == ' ') && !jumped) {
+            setDirectionSpeed(0, 50);
             jumped = true;
         }
         if (key == 'd' || keyCode == world.RIGHT) {
@@ -160,9 +167,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
             selectedWeapon.setCurrentFrameIndex(0);
             turned = false;
         }
-        if (key == ' ') {
-        	setDirectionSpeed(0, 25);
-        	jumped = true;
+        if (key == 'e') {
+        	switchWeapon();
         }
     }
 	
