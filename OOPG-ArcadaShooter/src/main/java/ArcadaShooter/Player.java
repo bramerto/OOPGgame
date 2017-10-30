@@ -21,7 +21,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	private boolean jumped;
     private int health, ammo;
     private float aimx, aimy, aimAngle;
-    private Weapon[] weapons = { new Knife(), new Gun()};
+    private Weapon[] weapons = { new Knife(), new Gun(world, null)};
     private Weapon selectedWeapon;
     private Random r;
     

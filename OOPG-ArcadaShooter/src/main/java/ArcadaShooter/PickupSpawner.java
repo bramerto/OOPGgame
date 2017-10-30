@@ -23,14 +23,14 @@ public class PickupSpawner implements IAlarmListener {
     }
 
     private void startAlarm() {
-        Alarm alarm=new Alarm("New bubble",1/pickupsPerSecond);
+        Alarm alarm=new Alarm("New pickup",1/pickupsPerSecond);
         alarm.addTarget(this);
         alarm.start();
     }
 
     @Override
     public void triggerAlarm(String alarmName) {
-    	Pickup[] pickups = {new Healthbox(world, pickupSound), new Immunity(world, pickupSound), new Ammobox(world, pickupSound), new DoubleDamage(world, pickupSound)};
+    	Pickup[] pickups = {new Healthbox(world, pickupSound), new Immunity(world, pickupSound), new Ammobox(world, pickupSound), new DoubleDamage(world, pickupSound), new Gun(world, pickupSound)};
     	Random generator = new Random();
     	int randomIndex = generator.nextInt(pickups.length);
 		Pickup healthbox=new Healthbox(world, pickupSound);

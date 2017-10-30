@@ -22,6 +22,8 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 	protected float speed;
 	private int damageDelay;
 	protected Weapon weapon;
+	private int health;
+	private boolean jumped;
 	
 	public Enemy(ArcadaShooter world, int damage, float speed, Weapon weapon) {
 		this(new Sprite("src/main/java/ArcadaShooter/media/enemy.png"));
@@ -29,6 +31,8 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		this.damage = damage;
 		this.speed = speed;
 		this.weapon = weapon;
+		this.health = 100;
+		this.jumped = false;
 		damageDelay = 0;
 		setGravity(0.8f);
 	}
@@ -45,46 +49,14 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		for (CollidedTile ct : collidedTiles) {
             if (ct.theTile instanceof NormalTile) {
             	
-                if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
+                if (ct.collisionSide == ct.TOP) {
                     try {
                         vector = world.getTileMap().getTilePixelLocation(ct.theTile);
                         setY(vector.y - getHeight());
+                        jumped = false;
                     } catch (TileNotFoundException e) {
                         e.printStackTrace();
                     }
-                }
-                
-                if (ct.collisionSide == ct.BOTTOM) {
-                    try {
-						vector = world.getTileMap().getTilePixelLocation(ct.theTile);
-	    					setySpeed(0);
-	    					setY(vector.y + 50);
-		                
-					} catch (TileNotFoundException e) {
-						e.printStackTrace();
-					}
-                }
-                
-                if (ct.collisionSide == ct.LEFT) {
-                    try {
-						vector = world.getTileMap().getTilePixelLocation(ct.theTile);
-	    					setxSpeed(0);
-	    					setX(vector.x - 50);
-		                
-					} catch (TileNotFoundException e) {
-						e.printStackTrace();
-					}
-                }
-                
-                if (ct.collisionSide == ct.RIGHT) {
-                    try {
-						vector = world.getTileMap().getTilePixelLocation(ct.theTile);
-	    					setxSpeed(0);
-	    					setX(vector.x + 50);
-		                
-					} catch (TileNotFoundException e) {
-						e.printStackTrace();
-					}
                 }
             }
         }
@@ -105,15 +77,18 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 
 	@Override
 	public void update() {
+		enemyKilled();
 		this.target = world.getPlayer();
 		
-		if (target.getY() > this.y && target.getX() > this.x) { //TODO: make enemies jump??
+		if (target.getY() > this.y && target.getX() > this.x && !jumped) { //TODO: make enemies jump??
 			setDirectionSpeed(45, speed);
 			setCurrentFrameIndex(0);
+			jumped = true;
 			
-		} else if (target.getY() > this.y && target.getX() < this.x) { //TODO: make enemies jump??
+		} else if (target.getY() > this.y && target.getX() < this.x && !jumped) { //TODO: make enemies jump??
 			setDirectionSpeed(315, speed);
 			setCurrentFrameIndex(1);
+			jumped = true;
 			
 		} else if (target.getX() > this.x) {
 			setDirectionSpeed(90, speed);
@@ -123,5 +98,15 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 			setDirectionSpeed(270, speed);
 			setCurrentFrameIndex(1);
 		}
+	}
+	
+	public void enemyKilled() {
+		if (health <= 0) {
+			world.deleteGameObject(this);
+		}
+	}
+	
+	public void receiveDamage(int damage) {
+		health -= damage;
 	}
 }

@@ -7,7 +7,7 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 public class HardEnemy extends Enemy {
 	
 	public HardEnemy(ArcadaShooter world) {
-		super(world, 20, 0.4f, new Gun());
+		super(world, 20, 0.2f, new Gun(world, null));
 	}
 	
 	@Override
