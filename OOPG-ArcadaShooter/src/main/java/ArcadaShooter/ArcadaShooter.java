@@ -50,9 +50,6 @@ public class ArcadaShooter extends GameEngine {
 		enemySpawner = new EnemySpawner(this);
 	}
 	
-	public void mouseClicked() {
-		player.getSelectedWeapon().doAction(player);
-	}
 
 	/**
      * Creates a view with a viewport

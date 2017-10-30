@@ -2,23 +2,21 @@ package ArcadaShooter;
 
 import java.awt.MouseInfo;
 import java.util.List;
-
 import com.sun.javafx.scene.paint.GradientUtils.Point;
-
+import ArcadaShooter.tiles.NormalTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
+import nl.han.ica.OOPDProcessingEngineHAN.Exceptions.TileNotFoundException;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
-import nl.han.ica.waterworld.Player;
-import nl.han.ica.waterworld.Swordfish;
 
 public class Bullet extends SpriteObject implements ICollidableWithTiles, ICollidableWithGameObjects{
 	private boolean collidedWithEnemy;
 	private ArcadaShooter world;
 	private Bullet[] bullets;
-	
+	private int damage;
 	
 	public Bullet(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/bullet.png"));
@@ -30,21 +28,61 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
 		return false;
 	}
 	
+	public void shoot(ArcadaShooter world, Player player) {
+	}
+	
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g:collidedGameObjects) {
             if (g instanceof Enemy) {
-            	//do zombie.health =- 10 or something like this.
-            	System.out.println("Zombie Hit!");
-                Player.score++;
+            		((Enemy) g).receiveDamage(damage);
+            		world.deleteGameObject(this);
             }
         }
     }
 
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
-		// TODO Auto-generated method stub
-		
+		for (CollidedTile ct : collidedTiles) {
+			if (ct.theTile instanceof NormalTile) {
+            		if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
+                    try {
+                    		world.deleteGameObject(this);
+                        
+                    } catch (TileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                
+            		if (ct.collisionSide == ct.BOTTOM) {
+                    try {
+                    		world.deleteGameObject(this);
+		                
+					} catch (TileNotFoundException e) {
+						e.printStackTrace();
+					}
+                }
+                
+            		if (ct.collisionSide == ct.LEFT) {
+                    try {
+                    		world.deleteGameObject(this);
+                    		
+					} catch (TileNotFoundException e) {
+						e.printStackTrace();
+					}
+                }
+                
+            		if (ct.collisionSide == ct.RIGHT) {
+                    try {
+                    		world.deleteGameObject(this);
+                    		
+					} catch (TileNotFoundException e) {
+						e.printStackTrace();
+					}
+                }
+            }
+        }
 	}
+	
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
@@ -64,6 +102,5 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
 	    }
 
 	    return angle;
-	}
-	
+	}	
 }

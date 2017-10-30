@@ -30,20 +30,16 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
     private Random r;
     
 	public Player(ArcadaShooter world) {
-<<<<<<< HEAD
 		this(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
 		this.world = world;
 	}
 	
 	private Player(Sprite sprite) {
-		super(sprite, 2);
-		this.setSelectedWeapon(weapons[0]);
-=======
 		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
-//		this.weapons[0] = new Knife(world);
-//		this.weapons[1] = new Gun(world);
+		//this.setSelectedWeapon(weapons[0]);
+		//this.weapons[0] = new Knife(world);
+		//this.weapons[1] = new Gun(world);
 		this.selectedWeapon = new Gun(world);
->>>>>>> a99251467a1a8295395f47ac75ca7d47f8a42616
         this.health = 100;
         this.r = new Random();
         this.jumped = false;
@@ -172,14 +168,6 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 		setAimX(x);
 		setAimY(y);
     }
-<<<<<<< HEAD
-	
-	public void mouseClicked() {
-		System.out.println("klikeed!");
-		//getSelectedWeapon().doAction(this);
-	}
-=======
->>>>>>> a99251467a1a8295395f47ac75ca7d47f8a42616
 
 	public int getAmmo() {
 		return ammo;
@@ -196,19 +184,14 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	public void setHealth(int health) {
 		this.health = health;
 	}
-<<<<<<< HEAD
-
-=======
-	
->>>>>>> a99251467a1a8295395f47ac75ca7d47f8a42616
 	public Weapon getSelectedWeapon() {
 		return selectedWeapon;
 	}
 
-<<<<<<< HEAD
+
 	public void setSelectedWeapon(Weapon selectedWeapon) {
 		this.selectedWeapon = selectedWeapon;
-=======
+	}
 	public float getAimX() {
 		return aimX;
 	}
@@ -223,6 +206,5 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
 	public void setAimY(float aimY) {
 		this.aimY = aimY;
->>>>>>> a99251467a1a8295395f47ac75ca7d47f8a42616
 	}
 }
