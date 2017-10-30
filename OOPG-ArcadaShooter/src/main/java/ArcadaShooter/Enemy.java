@@ -3,8 +3,6 @@ package ArcadaShooter;
 import java.util.List;
 
 import ArcadaShooter.tiles.NormalTile;
-import nl.han.ica.OOPDProcessingEngineHAN.Alarm.Alarm;
-import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
@@ -26,7 +24,7 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 	private boolean jumped;
 	
 	public Enemy(ArcadaShooter world, int damage, float speed, Weapon weapon) {
-		this(new Sprite("src/main/java/ArcadaShooter/media/enemy.png"));
+		super(new Sprite("src/main/java/ArcadaShooter/media/enemy.png"), 2);
 		this.world = world;
 		this.damage = damage;
 		this.speed = speed;
@@ -35,10 +33,6 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		this.jumped = false;
 		damageDelay = 0;
 		setGravity(0.8f);
-	}
-	
-	private Enemy(Sprite sprite) {
-		super(sprite, 2);
 	}
 
 	@Override
@@ -51,6 +45,7 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
                     vector = world.getTileMap().getTilePixelLocation(ct.theTile);
                     setY(vector.y - getHeight());
                     jumped = false;
+                    
                 } catch (TileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -58,15 +53,15 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
         }
 	}
 	
+	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for (GameObject g:collidedGameObjects) {
 			if (g instanceof Player) {
-				
-	    			if (damageDelay == 100 || damageDelay == 0) {
-	    				((Player)g).receiveDamage(damage);
-	    				damageDelay = 1;
-	    			}
-	    			damageDelay++;
+    			if (damageDelay == 100 || damageDelay == 0) {
+    				((Player)g).receiveDamage(damage);
+    				damageDelay = 1;
+    			}
+    			damageDelay++;
 			}
 		}
 	}

@@ -18,7 +18,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
 	private ArcadaShooter world;
 	private final int size = 50;
-	private boolean jumped;
+	private boolean jumped, turned;
     private int health, ammo;
     private float aimX, aimY;
     private Weapon[] weapons;
@@ -33,6 +33,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         this.health = 100;
         this.r = new Random();
         this.jumped = false;
+        this.turned = false;
         setGravity(0.8f);
 		this.world = world;
 	}
@@ -110,6 +111,13 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	
 	@Override
 	public void update() {
+		if (turned) { //TODO: gravity on gun
+			selectedWeapon.setX(getX() - 20);
+			selectedWeapon.setY(getY() + 25);
+		} else {
+			selectedWeapon.setX(getX() + 35);
+			selectedWeapon.setY(getY() + 25);
+		}
 		
 		if (health<=0) {
 			world.exit();
@@ -138,6 +146,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         if (key == 'a' || keyCode == world.LEFT) {
             setDirectionSpeed(270, speed);
             setCurrentFrameIndex(1);
+            selectedWeapon.setCurrentFrameIndex(1);
+            turned = true;
         }
         if ((key == 'w' || keyCode == world.UP) && !jumped) {
             setDirectionSpeed(0, 25);
@@ -146,10 +156,12 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         if (key == 'd' || keyCode == world.RIGHT) {
             setDirectionSpeed(90, speed);
             setCurrentFrameIndex(0);
+            selectedWeapon.setCurrentFrameIndex(0);
+            turned = false;
         }
         if (key == ' ') {
-	        	setDirectionSpeed(0, 25);
-	        	jumped = true;
+        	setDirectionSpeed(0, 25);
+        	jumped = true;
         }
     }
 	

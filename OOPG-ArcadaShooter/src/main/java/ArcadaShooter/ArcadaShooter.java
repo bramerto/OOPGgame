@@ -91,12 +91,12 @@ public class ArcadaShooter extends GameEngine {
     }
     
     private void createObjects() {
-	    	player = new Player(this);
-	    	
-	    	addGameObject(player, 100, 620);
-	    	addGameObject(player.getSelectedWeapon(), player.getX() + 35, player.getY() + 25);
-	    	
-	    	createDashboard(WORLDWIDTH, 100);
+    	player = new Player(this);
+    	
+    	addGameObject(player, 100, 620);
+    	addGameObject(player.getSelectedWeapon(), player.getX() + 35, player.getY() + 25);
+    	
+    	createDashboard(WORLDWIDTH, 100);
     }
     
     private void initializeTileMap() {

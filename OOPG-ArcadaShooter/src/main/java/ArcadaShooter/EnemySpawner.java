@@ -1,11 +1,9 @@
 package ArcadaShooter;
 
 import java.util.Random;
-import java.util.Vector;
 
 import nl.han.ica.OOPDProcessingEngineHAN.Alarm.Alarm;
 import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
-import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 
 public class EnemySpawner implements IAlarmListener {
 	
@@ -31,8 +29,10 @@ public class EnemySpawner implements IAlarmListener {
 	@Override
 	public void triggerAlarm(String alarmName) {
 		
-		if (currentEnemiesOnLevel < enemiesPerWave) {
-			Enemy[] enemies = { new EasyEnemy(world), new MediumEnemy(world), new HardEnemy(world) };
+		System.out.println(currentEnemiesOnLevel);
+		
+		if (currentEnemiesOnLevel < enemiesPerWave && !waveIsSpawned) {
+			Enemy[] enemies = { new EasyEnemy(world), new MediumEnemy(world)  };
 			int randomIndex = r.nextInt(enemies.length);
 			int randomXPos = r.nextInt();
 	        world.addGameObject(enemies[randomIndex], 3000 - 50,  620);
@@ -40,12 +40,12 @@ public class EnemySpawner implements IAlarmListener {
 	        System.out.println("zombie spawned"); //remove when done debugging
 	        
 	        if (currentEnemiesOnLevel == enemiesPerWave) {
-	        		waveIsSpawned = true;
+        		waveIsSpawned = true;
 	        } else {
-	        		currentEnemiesOnLevel++;
+        		currentEnemiesOnLevel++;
 	        }
 	        
-		} else if (currentEnemiesOnLevel == 0 && waveIsSpawned) {
+		} else if (currentEnemiesOnLevel == 0) {
 			System.out.println("new wave!"); //remove when done debugging
 			enemiesPerWave += 5;
 			waveIsSpawned = false;

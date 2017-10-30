@@ -14,7 +14,6 @@ public abstract class Weapon extends AnimatedSpriteObject {
 	public Weapon(Sprite sprite, ArcadaShooter world){
 		super(sprite, 2);
 		this.world = world;
-		setGravity(0);
 	}
 
 	public abstract void doAction(GameObject from, float targetX, float targetY);
