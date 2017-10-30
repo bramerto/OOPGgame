@@ -3,8 +3,6 @@ package ArcadaShooter;
 import java.awt.MouseInfo;
 import java.util.List;
 
-import com.sun.javafx.scene.paint.GradientUtils.Point;
-
 import ArcadaShooter.tiles.NormalTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
