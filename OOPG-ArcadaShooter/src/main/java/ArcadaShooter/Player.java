@@ -20,32 +20,30 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	private final int size = 50;
 	private boolean jumped;
     private int health, ammo;
-    private float aimx, aimy, aimAngle;
-    private Weapon[] weapons = { new Knife(), new Gun(world, null)};
+    private float aimX, aimY;
+    private Weapon[] weapons;
     private Weapon selectedWeapon;
     private Random r;
     
 	public Player(ArcadaShooter world) {
-		this(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
-		this.world = world;
-	}
-	
-	private Player(Sprite sprite) {
-		super(sprite, 2);
-		this.selectedWeapon = weapons[0];
+		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
+//		this.weapons[0] = new Knife(world);
+//		this.weapons[1] = new Gun(world);
+		this.selectedWeapon = new Gun(world);
         this.health = 100;
         this.r = new Random();
         this.jumped = false;
         setGravity(0.8f);
+		this.world = world;
 	}
-	
+
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;
 
 		for (CollidedTile ct : collidedTiles) {
             if (ct.theTile instanceof NormalTile) {
-            	if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
+            		if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
                     try {
                         vector = world.getTileMap().getTilePixelLocation(ct.theTile);
                         setY(vector.y - getHeight());
@@ -135,7 +133,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         }
 	}
 	
-	public void keyPressed(int keyCode, char key) { //TODO: registering two keys with keyReleased();
+	public void keyPressed(int keyCode, char key) { //TODO: detect two keys?
         final int speed = 5;
         if (key == 'a' || keyCode == world.LEFT) {
             setDirectionSpeed(270, speed);
@@ -150,21 +148,16 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
             setCurrentFrameIndex(0);
         }
         if (key == ' ') {
-            System.out.println("Spatie!");
+	        	setDirectionSpeed(0, 25);
+	        	jumped = true;
         }
     }
 	
 	@Override
 	public void mouseMoved(int x, int y) {
-		float dx = x - this.x;
-        float dy = y - this.y;
-
-        aimAngle = (dx >= 0 || dy >= 0) ? (float)Math.toDegrees(Math.atan2(dy, dx)) + 90 : (float)Math.toDegrees(Math.atan2(dy, dx)) + 450;
+		setAimX(x);
+		setAimY(y);
     }
-	
-	public void mouseClicked() {
-		selectedWeapon.doAction(this);
-	}
 
 	public int getAmmo() {
 		return ammo;
@@ -180,5 +173,25 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+	
+	public Weapon getSelectedWeapon() {
+		return selectedWeapon;
+	}
+
+	public float getAimX() {
+		return aimX;
+	}
+
+	public void setAimX(float aimX) {
+		this.aimX = aimX;
+	}
+
+	public float getAimY() {
+		return aimY;
+	}
+
+	public void setAimY(float aimY) {
+		this.aimY = aimY;
 	}
 }

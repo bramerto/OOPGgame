@@ -37,7 +37,6 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		setGravity(0.8f);
 	}
 	
-	
 	private Enemy(Sprite sprite) {
 		super(sprite, 2);
 	}
@@ -47,16 +46,13 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		PVector vector;
 		
 		for (CollidedTile ct : collidedTiles) {
-            if (ct.theTile instanceof NormalTile) {
-            	
-                if (ct.collisionSide == ct.TOP) {
-                    try {
-                        vector = world.getTileMap().getTilePixelLocation(ct.theTile);
-                        setY(vector.y - getHeight());
-                        jumped = false;
-                    } catch (TileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+            if (ct.theTile instanceof NormalTile && ct.collisionSide == ct.TOP) {
+                try {
+                    vector = world.getTileMap().getTilePixelLocation(ct.theTile);
+                    setY(vector.y - getHeight());
+                    jumped = false;
+                } catch (TileNotFoundException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -66,26 +62,31 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		for (GameObject g:collidedGameObjects) {
 			if (g instanceof Player) {
 				
-    			if (damageDelay == 100 || damageDelay == 0) {
-    				((Player)g).receiveDamage(damage);
-    				damageDelay = 1;
-    			}
-    			damageDelay++;
+	    			if (damageDelay == 100 || damageDelay == 0) {
+	    				((Player)g).receiveDamage(damage);
+	    				damageDelay = 1;
+	    			}
+	    			damageDelay++;
 			}
 		}
 	}
 
 	@Override
 	public void update() {
-		enemyKilled();
+		
+		if (health <= 0) {
+			EnemySpawner.currentEnemiesOnLevel--;
+			world.deleteGameObject(this);
+		}
+		
 		this.target = world.getPlayer();
 		
-		if (target.getY() > this.y && target.getX() > this.x && !jumped) { //TODO: make enemies jump??
+		if (target.getY() > this.y && target.getX() > this.x && !jumped) {
 			setDirectionSpeed(45, speed);
 			setCurrentFrameIndex(0);
 			jumped = true;
 			
-		} else if (target.getY() > this.y && target.getX() < this.x && !jumped) { //TODO: make enemies jump??
+		} else if (target.getY() > this.y && target.getX() < this.x && !jumped) {
 			setDirectionSpeed(315, speed);
 			setCurrentFrameIndex(1);
 			jumped = true;
@@ -97,12 +98,6 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		} else if (target.getX() < this.x) {
 			setDirectionSpeed(270, speed);
 			setCurrentFrameIndex(1);
-		}
-	}
-	
-	public void enemyKilled() {
-		if (health <= 0) {
-			world.deleteGameObject(this);
 		}
 	}
 	

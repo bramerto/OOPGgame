@@ -19,7 +19,6 @@ public class ArcadaShooter extends GameEngine {
 	private TextObject waveText;
 	private Sound pickupSound;
 	private Player player;
-	private MediumEnemy enemy;
 	private PickupSpawner pickupSpawner;
 	private EnemySpawner enemySpawner;
 	public final int WORLDWIDTH = 3000;
@@ -92,12 +91,12 @@ public class ArcadaShooter extends GameEngine {
     }
     
     private void createObjects() {
-    	player = new Player(this);
-    	Enemy testEnemy = new HardEnemy(this);
-    	addGameObject(player, 100, 620);
-    	addGameObject(testEnemy, 700, 620);
-    	
-    	createDashboard(WORLDWIDTH, 100);
+	    	player = new Player(this);
+	    	
+	    	addGameObject(player, 100, 620);
+	    	addGameObject(player.getSelectedWeapon(), player.getX() + 35, player.getY() + 25);
+	    	
+	    	createDashboard(WORLDWIDTH, 100);
     }
     
     private void initializeTileMap() {
@@ -128,14 +127,19 @@ public class ArcadaShooter extends GameEngine {
         tileMap = new TileMap(tileSize, tileTypes, tilesMap);
     }
     
+    @Override
+    public void mouseClicked() {
+		player.getSelectedWeapon().doAction(player, player.getAimX(), player.getAimY());
+	}
+    
     public Player getPlayer() {
     		return player;
     }
     
     public void refreshDashboard() {
-    	healthText.setText("Health: " + player.getHealth());
-    	ammoText.setText("Ammo: " + player.getAmmo());
-    	waveText.setText("Wave: " + enemySpawner.getWave());
+	    	healthText.setText("Health: " + player.getHealth());
+	    	ammoText.setText("Ammo: " + player.getAmmo());
+	    	waveText.setText("Wave: " + enemySpawner.getWave());
     }
 
 	@Override

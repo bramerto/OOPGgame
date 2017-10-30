@@ -4,25 +4,21 @@ import java.util.List;
 
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.AnimatedSpriteObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 
-public abstract class Weapon extends Pickup implements ICollidableWithTiles{
+public abstract class Weapon extends AnimatedSpriteObject {
+	protected ArcadaShooter world;
 	
-	public Weapon(Sprite sprite){
-		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
-	}
-	@Override
-	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
-		
+	public Weapon(Sprite sprite, ArcadaShooter world){
+		super(sprite, 2);
+		this.world = world;
+		setGravity(0);
 	}
 
-	@Override
-	public abstract void doAction(Player player);
+	public abstract void doAction(GameObject from, float targetX, float targetY);
 
-	@Override
 	public void update() {
-		
 	}
 }
-

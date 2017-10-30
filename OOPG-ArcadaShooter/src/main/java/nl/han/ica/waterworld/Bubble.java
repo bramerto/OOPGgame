@@ -87,7 +87,7 @@ public class Bubble extends GameObject implements ICollidableWithGameObjects, IC
         			try {
         				vector = world.getTileMap().getTilePixelLocation(ct.theTile);
 	        			setySpeed(0);
-	                    setY(vector.y + 50); //TODO: Tilesize to constant 
+	                    setY(vector.y + 50);
 	                    
         			} catch (TileNotFoundException e) {
         				e.printStackTrace();

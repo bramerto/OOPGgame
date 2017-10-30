@@ -30,7 +30,7 @@ public class PickupSpawner implements IAlarmListener {
 
     @Override
     public void triggerAlarm(String alarmName) {
-    	Pickup[] pickups = {new Healthbox(world, pickupSound), new Immunity(world, pickupSound), new Ammobox(world, pickupSound), new DoubleDamage(world, pickupSound), new Gun(world, pickupSound)};
+    	Pickup[] pickups = {new Healthbox(world, pickupSound), new Immunity(world, pickupSound), new Ammobox(world, pickupSound), new DoubleDamage(world, pickupSound)};
     	Random generator = new Random();
     	int randomIndex = generator.nextInt(pickups.length);
 		Pickup healthbox=new Healthbox(world, pickupSound);
