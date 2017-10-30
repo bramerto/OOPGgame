@@ -7,6 +7,7 @@ import ArcadaShooter.tiles.NormalTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
+import nl.han.ica.OOPDProcessingEngineHAN.Engine.GameEngine;
 import nl.han.ica.OOPDProcessingEngineHAN.Exceptions.TileNotFoundException;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.AnimatedSpriteObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
@@ -155,9 +156,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	
 	@Override
 	public void mouseMoved(int x, int y) {
-        aimx = x;
-        aimy = y;
-        //TODO: calculate angle ??
+		float dx = x - this.x;
+        float dy = y - this.y;
+
+        aimAngle = (dx >= 0 || dy >= 0) ? (float)Math.toDegrees(Math.atan2(dy, dx)) + 90 : (float)Math.toDegrees(Math.atan2(dy, dx)) + 450;
     }
 	
 	public void mouseClicked() {

@@ -6,7 +6,7 @@ import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 
-public class Weapon extends Pickup implements ICollidableWithTiles{
+public abstract class Weapon extends Pickup implements ICollidableWithTiles{
 	
 	public Weapon(){
 		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
@@ -14,12 +14,11 @@ public class Weapon extends Pickup implements ICollidableWithTiles{
 
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
+		
 	}
 
 	@Override
-	public void doAction(Player player) {
-		
-	}
+	public abstract void doAction(Player player);
 
 	@Override
 	public void update() {

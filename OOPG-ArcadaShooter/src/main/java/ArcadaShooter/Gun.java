@@ -7,16 +7,9 @@ public class Gun extends Weapon {
 	public Gun() {
 		int damage = 10;
 	}
-	
-	public void shoot(Bullet[] bullets) {
+
+	@Override
+	public void doAction(Player player) {
 		
-	}
-	
-	public boolean isEquipped() {
-		return isEquipped;
-	}
-	
-	public void unEquip() {
-		isEquipped = false;
 	}
 }

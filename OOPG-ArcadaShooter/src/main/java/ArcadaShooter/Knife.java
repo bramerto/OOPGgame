@@ -8,12 +8,7 @@ public class Knife extends Weapon {
 		damage = 30;
 	}
 
-	public void doDamage(Player player) {
+	public void doAction(Player player) {
 		
 	}
-	
-	public boolean isEquipped() {
-		return false;
-	}
-
 }

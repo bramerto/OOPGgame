@@ -6,10 +6,8 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 
 public class HardEnemy extends Enemy {
 	
-	private Weapon weapon;
-	
 	public HardEnemy(ArcadaShooter world) {
-		super(world, 20, 0.2f, new Gun());
+		super(world, 20, 0.4f, new Gun());
 	}
 	
 	@Override
@@ -28,7 +26,7 @@ public class HardEnemy extends Enemy {
 			}
 		} else {
 			setDirectionSpeed(0, 0);
-			weapon.doAction(target);
+			((Gun)weapon).doAction(target);
 		}
 	}
 }
