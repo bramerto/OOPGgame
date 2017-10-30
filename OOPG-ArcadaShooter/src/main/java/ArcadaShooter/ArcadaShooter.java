@@ -129,7 +129,9 @@ public class ArcadaShooter extends GameEngine {
     
     @Override
     public void mouseClicked() {
-		player.getSelectedWeapon().doAction(player, player.getAimX(), player.getAimY());
+    	if (player.getAmmo() > 0 ) {
+    		player.getSelectedWeapon().doAction(player, player.getAimX(), player.getAimY());
+    	}
 	}
     
     public Player getPlayer() {
