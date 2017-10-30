@@ -22,6 +22,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
     private float aimX, aimY;
     public Weapon selectedWeapon;
     private Random r;
+    public static boolean isImmortal;
     
 	public Player(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
@@ -104,7 +105,9 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	}
 	
 	public void receiveDamage(int damage) {
-		health -= damage;
+		if(!isImmortal) {
+			health -= damage;
+		}
 		world.refreshDashboard();
 	}
 
@@ -207,5 +210,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
 	public void setAimY(float aimY) {
 		this.aimY = aimY;
+	}
+
+	public static void setImortal() {
+		isImmortal = false;
+		
 	}
 }
