@@ -1,5 +1,9 @@
 package ArcadaShooter;
 
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+ 
+import javax.swing.*;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +35,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	
 	private Player(Sprite sprite) {
 		super(sprite, 2);
-		this.selectedWeapon = weapons[0];
+		this.setSelectedWeapon(weapons[0]);
         this.health = 100;
         this.r = new Random();
         this.jumped = false;
@@ -92,7 +96,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	}
 	
 	public void switchWeapon() {
-		selectedWeapon = (selectedWeapon instanceof Knife) ? weapons[1] : weapons[0];
+		setSelectedWeapon((getSelectedWeapon() instanceof Knife) ? weapons[1] : weapons[0]);
 	}
 	
 	public void receiveDamage(int damage) {
@@ -161,7 +165,8 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
     }
 	
 	public void mouseClicked() {
-		selectedWeapon.doAction(this);
+		System.out.println("klikeed!");
+		//getSelectedWeapon().doAction(this);
 	}
 
 	public int getAmmo() {
@@ -178,5 +183,13 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public Weapon getSelectedWeapon() {
+		return selectedWeapon;
+	}
+
+	public void setSelectedWeapon(Weapon selectedWeapon) {
+		this.selectedWeapon = selectedWeapon;
 	}
 }

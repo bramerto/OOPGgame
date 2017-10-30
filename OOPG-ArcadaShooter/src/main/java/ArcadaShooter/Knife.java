@@ -7,7 +7,7 @@ public class Knife extends Weapon {
 	private boolean isEquipped;
 	
 	public Knife() {
-		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
+		super(new Sprite("src/main/java/ArcadaShooter/media/weapon_dagger.png"));
 		damage = 30;
 	}
 

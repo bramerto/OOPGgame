@@ -47,8 +47,12 @@ public class ArcadaShooter extends GameEngine {
 	}
 	
 	private void createSpawners() {
-		pickupSpawner = new PickupSpawner(this,pickupSound,(float) 0.1);
+		pickupSpawner = new PickupSpawner(this,pickupSound,(float) 1.1);
 		enemySpawner = new EnemySpawner(this);
+	}
+	
+	public void mouseClicked() {
+		player.getSelectedWeapon().doAction(player);
 	}
 
 	/**

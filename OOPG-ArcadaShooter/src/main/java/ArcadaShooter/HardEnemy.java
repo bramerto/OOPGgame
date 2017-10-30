@@ -28,7 +28,7 @@ public class HardEnemy extends Enemy {
 			}
 		} else {
 			setDirectionSpeed(0, 0);
-			weapon.doAction(target);
+			//weapon.doAction(target);
 		}
 	}
 }
