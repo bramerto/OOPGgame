@@ -11,6 +11,7 @@ import ArcadaShooter.tiles.NormalTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
+import nl.han.ica.OOPDProcessingEngineHAN.Engine.GameEngine;
 import nl.han.ica.OOPDProcessingEngineHAN.Exceptions.TileNotFoundException;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.AnimatedSpriteObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
@@ -23,12 +24,13 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	private final int size = 50;
 	private boolean jumped;
     private int health, ammo;
-    private float aimx, aimy, aimAngle;
-    private Weapon[] weapons = { new Knife(), new Gun(world, null)};
+    private float aimX, aimY;
+    private Weapon[] weapons;
     private Weapon selectedWeapon;
     private Random r;
     
 	public Player(ArcadaShooter world) {
+<<<<<<< HEAD
 		this(new Sprite("src/main/java/ArcadaShooter/media/player.png"));
 		this.world = world;
 	}
@@ -36,19 +38,26 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	private Player(Sprite sprite) {
 		super(sprite, 2);
 		this.setSelectedWeapon(weapons[0]);
+=======
+		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
+//		this.weapons[0] = new Knife(world);
+//		this.weapons[1] = new Gun(world);
+		this.selectedWeapon = new Gun(world);
+>>>>>>> a99251467a1a8295395f47ac75ca7d47f8a42616
         this.health = 100;
         this.r = new Random();
         this.jumped = false;
         setGravity(0.8f);
+		this.world = world;
 	}
-	
+
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;
 
 		for (CollidedTile ct : collidedTiles) {
             if (ct.theTile instanceof NormalTile) {
-            	if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
+            		if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
                     try {
                         vector = world.getTileMap().getTilePixelLocation(ct.theTile);
                         setY(vector.y - getHeight());
@@ -138,7 +147,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         }
 	}
 	
-	public void keyPressed(int keyCode, char key) { //TODO: registering two keys with keyReleased();
+	public void keyPressed(int keyCode, char key) { //TODO: detect two keys?
         final int speed = 5;
         if (key == 'a' || keyCode == world.LEFT) {
             setDirectionSpeed(270, speed);
@@ -153,21 +162,24 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
             setCurrentFrameIndex(0);
         }
         if (key == ' ') {
-            System.out.println("Spatie!");
+	        	setDirectionSpeed(0, 25);
+	        	jumped = true;
         }
     }
 	
 	@Override
 	public void mouseMoved(int x, int y) {
-        aimx = x;
-        aimy = y;
-        //TODO: calculate angle ??
+		setAimX(x);
+		setAimY(y);
     }
+<<<<<<< HEAD
 	
 	public void mouseClicked() {
 		System.out.println("klikeed!");
 		//getSelectedWeapon().doAction(this);
 	}
+=======
+>>>>>>> a99251467a1a8295395f47ac75ca7d47f8a42616
 
 	public int getAmmo() {
 		return ammo;
@@ -184,12 +196,33 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	public void setHealth(int health) {
 		this.health = health;
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> a99251467a1a8295395f47ac75ca7d47f8a42616
 	public Weapon getSelectedWeapon() {
 		return selectedWeapon;
 	}
 
+<<<<<<< HEAD
 	public void setSelectedWeapon(Weapon selectedWeapon) {
 		this.selectedWeapon = selectedWeapon;
+=======
+	public float getAimX() {
+		return aimX;
+	}
+
+	public void setAimX(float aimX) {
+		this.aimX = aimX;
+	}
+
+	public float getAimY() {
+		return aimY;
+	}
+
+	public void setAimY(float aimY) {
+		this.aimY = aimY;
+>>>>>>> a99251467a1a8295395f47ac75ca7d47f8a42616
 	}
 }

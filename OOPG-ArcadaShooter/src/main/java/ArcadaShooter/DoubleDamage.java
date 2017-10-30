@@ -14,33 +14,30 @@ import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
-public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableWithGameObjects, ICollidableWithTiles{
+public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableWithTiles{
 	private final Sound pickupSound;
     private ArcadaShooter world;
 	
 	public DoubleDamage(ArcadaShooter world, Sound pickupSound) {
-		// TODO Auto-generated constructor stub
 		super(new Sprite("src/main/java/ArcadaShooter/media/pickup_doubledamage.png"));
 		this.pickupSound=pickupSound;
         this.world=world;
         setGravity(0.3f);
 	}
+	
 	@Override
 	public void triggerAlarm(String alarmName) {
-		// TODO Auto-generated method stub
-		
 	}
+	
 	@Override
 	public void doAction(Player player) {
 		world.deleteGameObject(this);
-		// TODO Auto-generated method stub
-		
 	}
+	
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
+	
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;
@@ -55,10 +52,5 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
                 }
 			}
         }
-	}
-	@Override
-	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
-		// TODO Auto-generated method stub
-		
 	}
 }
