@@ -11,7 +11,6 @@ import nl.han.ica.OOPDProcessingEngineHAN.Exceptions.TileNotFoundException;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
-import processing.core.PVector;
 
 public class Gun extends Weapon {
 	
@@ -20,13 +19,17 @@ public class Gun extends Weapon {
 	public Gun(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/weapon_pistol.png"), world);
 	}
-		
+	
 	private void shoot(GameObject from) {
 		Bullet p = new Bullet(world);
 		world.addGameObject(p, from.getX() + 25,  from.getY() + 25);
 		p.setDirectionSpeed(aimAngle, 20);
+		
+		if (from instanceof Player) {
+        	((Player)from).setAmmo(((Player)from).getAmmo() - 1);
+        }
+		world.refreshDashboard();
 	}
-
 
 	@Override
 	public void doAction(GameObject from, float targetX, float targetY) {

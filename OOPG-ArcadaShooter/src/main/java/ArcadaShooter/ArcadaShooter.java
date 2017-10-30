@@ -95,7 +95,7 @@ public class ArcadaShooter extends GameEngine {
 	    	player = new Player(this);
 	    	
 	    	addGameObject(player, 100, 620);
-	    	addGameObject(player.getSelectedWeapon(), player.getX() + 35, player.getY() + 25);
+	    	addGameObject(player.selectedWeapon, player.getX() + 35, player.getY() + 25);
 	    	
 	    	createDashboard(WORLDWIDTH, 100);
     }
@@ -130,7 +130,7 @@ public class ArcadaShooter extends GameEngine {
     
     @Override
     public void mouseClicked() {
-		player.getSelectedWeapon().doAction(player, player.getAimX(), player.getAimY());
+		player.selectedWeapon.doAction(player, player.getAimX(), player.getAimY());
 	}
     
     public Player getPlayer() {

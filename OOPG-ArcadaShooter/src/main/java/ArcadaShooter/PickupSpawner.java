@@ -5,8 +5,6 @@ import java.util.Random;
 import nl.han.ica.OOPDProcessingEngineHAN.Alarm.Alarm;
 import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
 import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
-import nl.han.ica.waterworld.Bubble;
-import nl.han.ica.waterworld.WaterWorld;
 
 public class PickupSpawner implements IAlarmListener {
 	private float pickupsPerSecond;
