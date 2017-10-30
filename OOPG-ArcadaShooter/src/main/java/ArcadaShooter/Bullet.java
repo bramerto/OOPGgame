@@ -16,12 +16,19 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
 	private boolean collidedWithEnemy;
 	private ArcadaShooter world;
 	private Bullet[] bullets;
-	private int damage;
+	public static int damage;
 	
 	public Bullet(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/bullet.png"));
 		this.world = world;
+		this.damage=10;
 		setGravity(0.8f);
+	}
+	public static void resetDamage() {
+		damage = 10;
+	}
+	public static void doDoubleDamage() {
+		damage = damage *2;
 	}
 	
 	public boolean collidedWithEnemy(int x, int y, Enemy enemy) {
@@ -88,8 +95,6 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
 		// TODO Auto-generated method stub
 		int mouseY = MouseInfo.getPointerInfo().getLocation().y;
         int mouseX = MouseInfo.getPointerInfo().getLocation().x;
-
-		System.out.println(x);
 		setDirectionSpeed(100, 1);
 		
 	}

@@ -13,7 +13,8 @@ import processing.core.PVector;
 public class Ammobox extends Pickup implements ICollidableWithTiles {
 	private final Sound pickupSound;
     private ArcadaShooter world;
-	
+    
+    
 	public Ammobox(ArcadaShooter world, Sound pickupSound) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/pickup_ammobox.png"));
 		this.pickupSound=pickupSound;

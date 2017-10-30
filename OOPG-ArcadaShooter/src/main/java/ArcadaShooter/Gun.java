@@ -19,7 +19,7 @@ public class Gun extends Weapon {
 	public Gun(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/weapon_pistol.png"), world);
 	}
-	
+
 	private void shoot(GameObject from) {
 		Bullet p = new Bullet(world);
 		world.addGameObject(p, from.getX() + 25,  from.getY() + 25);
