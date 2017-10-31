@@ -20,17 +20,16 @@ public class Ammobox extends Pickup implements ICollidableWithTiles {
         this.world=world;
         setGravity(0.3f);
 	}
-	
+	/**
+     * Activate pickup
+     * @param Player element
+     */
 	@Override
 	public void doAction(Player player) {
 		System.out.println(player.getAmmo()); //TODO: remove if done
 		player.setAmmo(player.getAmmo() + 10);
 		world.deleteGameObject(this);
 		world.refreshDashboard();
-	}
-	
-	@Override
-	public void update() {
 	}
 	
 	@Override
@@ -47,5 +46,10 @@ public class Ammobox extends Pickup implements ICollidableWithTiles {
                 }
 			}
         }
+	}
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }

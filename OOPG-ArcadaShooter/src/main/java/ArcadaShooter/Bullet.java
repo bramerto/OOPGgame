@@ -12,21 +12,26 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 
 public class Bullet extends SpriteObject implements ICollidableWithTiles, ICollidableWithGameObjects{
-
 	private ArcadaShooter world;
-	private Bullet[] bullets;
 	public static int damage;
-
 	
 	public Bullet(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/bullet.png"));
 		this.world = world;
-		this.damage = 10;
-		setGravity(0.8f);
+		setDamage();
 	}
-	public static void resetDamage() {
+	/**
+     * Getter and Setter for damage
+     */
+	public static int getDamage() {
+		return damage;
+	}
+	public static void setDamage() {
 		damage = 10;
 	}
+	/**
+     * Double damage from pickup
+     */
 	public static void doDoubleDamage() {
 		damage = damage *2;
 	}
@@ -35,7 +40,6 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
         for (GameObject g:collidedGameObjects) {
             if (g instanceof Enemy) {
             	//TODO: When enemy shoots it collides with itself
-            	
         		((Enemy)g).receiveDamage(damage);
         		world.deleteGameObject(this);
             }
@@ -84,8 +88,9 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
             }
         }
 	}
-	
 	@Override
 	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }

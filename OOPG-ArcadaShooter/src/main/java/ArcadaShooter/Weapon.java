@@ -11,7 +11,6 @@ public abstract class Weapon extends AnimatedSpriteObject {
 		super(sprite, 2);
 		this.world = world;
 	}
-
 	public abstract void doAction(GameObject from, float targetX, float targetY);
 	public void update() {
 	}

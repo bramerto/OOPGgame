@@ -23,12 +23,18 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
         this.world=world;
         setGravity(0.3f);
 	}
-	
+	/**
+     * Alarm triggered
+     * @param Alarm name
+     */
 	@Override
 	public void triggerAlarm(String alarmName) {
-		Bullet.resetDamage();
+		Bullet.setDamage();
 	}
-	
+	/**
+     * Activate pickup
+     * @param Player element
+     */
 	@Override
 	public void doAction(Player player) {
 		Alarm alarm=new Alarm("Start Double Damage",1/0.1);
@@ -38,10 +44,6 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
 		Bullet.doDoubleDamage();
 		Knife.doDoubleDamage();
 		world.deleteGameObject(this);
-	}
-	
-	@Override
-	public void update() {
 	}
 	
 	@Override
@@ -58,6 +60,11 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
                 }
 			}
         }
+	}
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

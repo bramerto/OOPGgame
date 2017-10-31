@@ -36,7 +36,7 @@ public class PickupSpawner implements IAlarmListener {
 
     /**
      * Method call when alarm is triggered
-     * @param Alarm object
+     * @param Alarm name
      */
     @Override
     public void triggerAlarm(String alarmName) {
