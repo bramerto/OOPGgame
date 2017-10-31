@@ -12,7 +12,6 @@ import processing.core.PVector;
 
 public class Healthbox extends Pickup implements ICollidableWithTiles {
 	final int size = 50;
-	private final Sound pickupSound;
     private ArcadaShooter world;
     
     /**
@@ -20,9 +19,8 @@ public class Healthbox extends Pickup implements ICollidableWithTiles {
      * @param world object to add item to
      * @param Sound for pick up
      */
-	public Healthbox(ArcadaShooter world, Sound pickupSound) {
+	public Healthbox(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/pickup_healthbox.png"));
-        this.pickupSound = pickupSound;
         this.world = world;
         setGravity(0.3f);
 	}

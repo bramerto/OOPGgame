@@ -2,34 +2,55 @@ package ArcadaShooter;
 
 import java.util.List;
 
+import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithGameObjects;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 
-public class Knife extends Weapon {
-	private static int damage;
-	private boolean isEquipped;
-	
+public class Knife extends Weapon implements ICollidableWithGameObjects {
+	private int damage;
+	private int damageDelay;
+    /**
+     * Constructor
+     * @param World The world where knife is created
+     */
 	public Knife(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/weapon_dagger.png"), world);
-		damage = 30;
+		setDamage();
 	}
-
+	/**
+     * Attacks with knife
+     * @param Gameobject from Player element
+     * @param TargetX x coordinates for target
+     * @param TargetY y coordinates for target
+     */
 	@Override
 	public void doAction(GameObject from, float targetX, float targetY) {
-		this.setDirection(100);
+		this.setX(this.getX() + 20);
 	}
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g:collidedGameObjects) {
             if (g instanceof Enemy) {
-            		((Enemy) g).receiveDamage(damage);
-            		world.deleteGameObject(this);
+            	//TODO: When enemy shoots it collides with itself
+            	if (damageDelay == 100 || damageDelay == 0) {
+    				((Enemy)g).receiveDamage(damage);
+    				damageDelay = 1;
+    			}
+    			damageDelay++;
             }
         }
     }
-	public static void resetDamage() {
-		damage = 10;
+	/**
+     * Resets damage to default
+     */
+	@Override
+	public void setDamage() {
+		this.damage = 10;
 	}
-	public static void doDoubleDamage() {
-		damage = damage *2;
+	/**
+     * Double damage from pickup
+     */
+	public void doubleDamage() {
+		this.damage = damage *2;
 	}
+	
 }

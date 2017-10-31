@@ -30,10 +30,7 @@ public abstract class Pickup extends SpriteObject implements IAlarmListener, ICo
 	
 	@Override
     public void triggerAlarm(String alarmName) {
-		Sound sound = new Sound(world, "");
-		Pickup b = new Healthbox(world, sound);
-        world.addGameObject(b);
-        startAlarm();
+
     }
 
 	public void delete(ArcadaShooter world) {

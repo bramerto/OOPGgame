@@ -28,7 +28,12 @@ public class HardEnemy extends Enemy {
 				setCurrentFrameIndex(1);
 			}
 		} else {
-			((Gun)weapon).doAction((GameObject)this, target.getX(), target.getY());
+			if (damageDelay == 100 || damageDelay == 0) {
+				((Gun)weapon).doAction((GameObject)this, target.getX(), target.getY());
+				damageDelay = 1;
+			}
+			damageDelay++;
+			
 			setDirectionSpeed(0, 0);
 		}
 	}

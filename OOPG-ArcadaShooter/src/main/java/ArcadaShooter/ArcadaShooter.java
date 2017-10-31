@@ -93,7 +93,7 @@ public class ArcadaShooter extends GameEngine {
     
     private void createObjects() {
 	    	player = new Player(this);
-	    	addGameObject(player, 100, 620);	    	
+	    	addGameObject(player, 100, 620);
 	    	createDashboard(WORLDWIDTH, 100);
     }
     
@@ -127,10 +127,11 @@ public class ArcadaShooter extends GameEngine {
     
     @Override
     public void mouseClicked() {
-    	
-    	if (player.getAmmo() > 0 && player.selectedWeapon instanceof Gun) {
-    		player.selectedWeapon.doAction(player, player.getAimX(), player.getAimY());
-    	}
+	    	if (player.getAmmo() > 0 && player.selectedWeapon instanceof Gun) {
+	    		player.selectedWeapon.doAction(player, player.getAimX(), player.getAimY());
+	    	} else {
+	    		player.selectedWeapon.doAction(player, player.getAimX(), player.getAimY());
+	    	}
 	}
     
     public Player getPlayer() {

@@ -13,13 +13,11 @@ import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
 import processing.core.PVector;
 
 public class Immunity extends Pickup implements IAlarmListener, ICollidableWithTiles {
-	private final Sound pickupSound;
     private ArcadaShooter world;
     public boolean isActive;
 	
-	public Immunity(ArcadaShooter world, Sound pickupSound) {
+	public Immunity(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/pickup_immunity.png"));
-		this.pickupSound=pickupSound;
         this.world=world;
         setGravity(0.3f);
 	}

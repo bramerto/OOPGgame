@@ -18,7 +18,7 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 	private int damage;
 	protected Player target;
 	protected float speed;
-	private int damageDelay;
+	protected int damageDelay;
 	protected Weapon weapon;
 	protected int health;
 	private boolean jumped;
@@ -58,11 +58,11 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for (GameObject g:collidedGameObjects) {
 			if (g instanceof Player) {
-    			if (damageDelay == 100 || damageDelay == 0) {
-    				((Player)g).receiveDamage(damage);
-    				damageDelay = 1;
-    			}
-    			damageDelay++;
+	    			if (damageDelay == 100 || damageDelay == 0) {
+	    				((Player)g).receiveDamage(damage);
+	    				damageDelay = 1;
+	    			}
+	    			damageDelay++;
 			}
 		}
 	}
