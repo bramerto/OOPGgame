@@ -5,9 +5,11 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 
 public class Gun extends Weapon {
 	private float aimAngle;
+	private int bulletDamage;
 	
 	public Gun(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/weapon_pistol.png"), world);
+		setDamage();
 	}
 	/**
      * Attacks with Gun
@@ -15,7 +17,7 @@ public class Gun extends Weapon {
      */
 	private void shoot(GameObject from) {
 		if(((Player)from).getAmmo() > 0) {
-			Bullet p = new Bullet(world);
+			Bullet p = new Bullet(world, bulletDamage);
 			world.addGameObject(p, from.getX() + 25,  from.getY() + 25);
 			p.setDirectionSpeed(aimAngle, 20);
 			
@@ -39,5 +41,21 @@ public class Gun extends Weapon {
 
         aimAngle = (dx >= 0 || dy >= 0) ? (float)Math.toDegrees(Math.atan2(dy, dx)) + 90 : (float)Math.toDegrees(Math.atan2(dy, dx)) + 450;
         shoot(from);
+	}
+	/**
+     * Sets bullet damage
+     */
+	@Override
+	public void setDamage() {
+		this.bulletDamage = 10;
+		
+	}
+	/**
+     * Doubles bullet damage
+     */
+	@Override
+	public void doubleDamage() {
+		this.bulletDamage = bulletDamage*2;
+		
 	}
 }

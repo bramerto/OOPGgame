@@ -7,12 +7,15 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 
 public class Knife extends Weapon implements ICollidableWithGameObjects {
-	private static int damage;
+	private int damage;
 	private int damageDelay;
-	
+    /**
+     * Constructor
+     * @param World The world where knife is created
+     */
 	public Knife(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/weapon_dagger.png"), world);
-		damage = 10;
+		setDamage();
 	}
 	/**
      * Attacks with knife
@@ -39,14 +42,15 @@ public class Knife extends Weapon implements ICollidableWithGameObjects {
 	/**
      * Resets damage to default
      */
-	public static void resetDamage() {
-		damage = 10;
+	@Override
+	public void setDamage() {
+		this.damage = 10;
 	}
 	/**
      * Double damage from pickup
      */
-	public static void doDoubleDamage() {
-		damage = damage *2;
+	public void doubleDamage() {
+		this.damage = damage *2;
 	}
 	
 }

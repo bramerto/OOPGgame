@@ -13,27 +13,21 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 
 public class Bullet extends SpriteObject implements ICollidableWithTiles, ICollidableWithGameObjects{
 	private ArcadaShooter world;
-	public static int damage;
+	private int damage;
 	
-	public Bullet(ArcadaShooter world) {
+	public Bullet(ArcadaShooter world, int damage) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/bullet.png"));
 		this.world = world;
-		setDamage();
+		setDamage(damage);
 	}
 	/**
      * Getter and Setter for damage
      */
-	public static int getDamage() {
+	public int getDamage() {
 		return damage;
 	}
-	public static void setDamage() {
-		damage = 10;
-	}
-	/**
-     * Double damage from pickup
-     */
-	public static void doDoubleDamage() {
-		damage = damage *2;
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 	
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {

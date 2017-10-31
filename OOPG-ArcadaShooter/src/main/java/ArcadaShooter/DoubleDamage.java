@@ -13,13 +13,14 @@ import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
 import processing.core.PVector;
 
 public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableWithTiles{
-	private final Sound pickupSound;
     private ArcadaShooter world;
     public boolean isActive;
-	
-	public DoubleDamage(ArcadaShooter world, Sound pickupSound) {
+    /**
+     * Constructor
+     * @param World The world where knife is created
+     */
+	public DoubleDamage(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/pickup_doubledamage.png"));
-		this.pickupSound=pickupSound;
         this.world=world;
         setGravity(0.3f);
 	}
@@ -29,7 +30,7 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
      */
 	@Override
 	public void triggerAlarm(String alarmName) {
-		Bullet.setDamage();
+		world.getPlayer().selectedWeapon.setDamage();
 	}
 	/**
      * Activate pickup
@@ -41,8 +42,7 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
         alarm.addTarget(this);
         alarm.start();
         
-		Bullet.doDoubleDamage();
-		Knife.doDoubleDamage();
+        world.getPlayer().selectedWeapon.doubleDamage();
 		world.deleteGameObject(this);
 	}
 	

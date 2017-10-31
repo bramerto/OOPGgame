@@ -10,17 +10,14 @@ public class PickupSpawner implements IAlarmListener {
 	private float pickupsPerSecond;
     private Random random;
     private ArcadaShooter world;
-    private Sound pickupSound;
     /**
      * Creates a pickup spawner that adds them to the game
      * @param world object to add item to
-     * @param Sound for pick up
      * @param number of how fast the timer goes
      */
     public PickupSpawner(ArcadaShooter world,Sound pickupSound,float pickupsPerSecond) {
         this.pickupsPerSecond=pickupsPerSecond;
         this.world=world;
-        this.pickupSound=pickupSound;
         random=new Random();
         startAlarm();
     }
@@ -40,10 +37,9 @@ public class PickupSpawner implements IAlarmListener {
      */
     @Override
     public void triggerAlarm(String alarmName) {
-    	Pickup[] pickups = {new Healthbox(world, pickupSound), new Immunity(world, pickupSound), new Ammobox(world, pickupSound), new DoubleDamage(world, pickupSound)};
+    	Pickup[] pickups = {new Healthbox(world), new Immunity(world), new Ammobox(world), new DoubleDamage(world)};
     	Random generator = new Random();
     	int randomIndex = generator.nextInt(pickups.length);
-		Pickup healthbox=new Healthbox(world, pickupSound);
 		Random rand = new Random();
 
 		int  x = rand.nextInt(world.width) + 1;
