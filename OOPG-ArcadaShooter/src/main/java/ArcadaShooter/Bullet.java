@@ -45,8 +45,8 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
 	}
 	/**
      * Check for collisions with game objects
-     * @param List of all game objects
-     * @author Chris Buter
+     * @param List<GameObject> collidedGameObjects
+     * @author Bram van der Beek
      */
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g:collidedGameObjects) {
@@ -108,6 +108,7 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
             }
         }
 	}
+	
 	@Override
 	public void update() {
 	}

@@ -17,7 +17,7 @@ public class Healthbox extends Pickup implements ICollidableWithTiles {
     /**
      * Creates a pickup that heals the player
      * @param world object to add item to
-     * @param Sound for pick up
+     * @author Chris Buter
      */
 	public Healthbox(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/pickup_healthbox.png"));
@@ -27,6 +27,7 @@ public class Healthbox extends Pickup implements ICollidableWithTiles {
 	/**
      * function call of pickup
      * @param player object
+     * @author Chris Buter
      */
 	@Override
 	public void doAction(Player player) {

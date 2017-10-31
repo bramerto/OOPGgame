@@ -9,14 +9,27 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 public class Knife extends Weapon implements ICollidableWithGameObjects {
 	private int damage;
 	private int damageDelay;
+	private int previousDamage;
     /**
+     * Constructor
+     * @param World The world where knife is created
+     * @param damage damage the knife has
+     */
+	public Knife(ArcadaShooter world, int damage) {
+		super(new Sprite("src/main/java/ArcadaShooter/media/weapon_dagger.png"), world);
+		setDamage(damage);
+	}
+	
+	/**
      * Constructor
      * @param World The world where knife is created
      */
 	public Knife(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/weapon_dagger.png"), world);
-		setDamage();
+		int defaultDamage = 20;
+		setDamage(defaultDamage);
 	}
+	
 	/**
      * Attacks with knife
      * @param Gameobject from Player element
@@ -28,6 +41,7 @@ public class Knife extends Weapon implements ICollidableWithGameObjects {
 	public void doAction(GameObject from, float targetX, float targetY) {
 		this.setX(this.getX() + 20);
 	}
+	
 	/**
      * Check for collisions with game objects
      * @param List of all game objects
@@ -36,7 +50,6 @@ public class Knife extends Weapon implements ICollidableWithGameObjects {
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g:collidedGameObjects) {
             if (g instanceof Enemy) {
-            	//TODO: When enemy shoots it collides with itself
             	if (damageDelay == 100 || damageDelay == 0) {
     				((Enemy)g).receiveDamage(damage);
     				damageDelay = 1;
@@ -45,20 +58,4 @@ public class Knife extends Weapon implements ICollidableWithGameObjects {
             }
         }
     }
-	/**
-     * Resets damage to default
-     * @author Chris Buter
-     */
-	@Override
-	public void setDamage() {
-		this.damage = 10;
-	}
-	/**
-     * Double damage from pickup
-     * @author Chris Buter
-     */
-	public void doubleDamage() {
-		this.damage = damage *2;
-	}
-	
 }

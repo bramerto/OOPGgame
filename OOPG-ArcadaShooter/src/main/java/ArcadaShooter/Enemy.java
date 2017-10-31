@@ -35,7 +35,12 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		setGravity(0.8f);
 		if (this.weapon != null) this.world.addGameObject(this.weapon, getX() + 35, getY() + 25);
 	}
-
+	
+	/**
+	 * checks collision with the tiles
+	 * @author Bram van der Beek
+	 * @param List<CollidedTile> collidedTiles
+	 */
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;
@@ -54,25 +59,35 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
         }
 	}
 	
+	/**
+	 * checks collision with pickups and applies buff to player
+	 * @author Bram van der Beek
+	 * @param List<GameObject> collidedGameObjects
+	 */
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for (GameObject g:collidedGameObjects) {
 			if (g instanceof Player) {
-	    			if (damageDelay == 100 || damageDelay == 0) {
-	    				((Player)g).receiveDamage(damage);
-	    				damageDelay = 1;
-	    			}
-	    			damageDelay++;
+    			if (damageDelay == 100 || damageDelay == 0) {
+    				((Player)g).receiveDamage(damage);
+    				damageDelay = 1;
+    			}
+    			damageDelay++;
 			}
 		}
 	}
 
+	/**
+	 * Enemy AI so it moves towards the player and checks if enemy is killed, also sets weapon frame of equiped weapon
+	 * @author Bram van der Beek
+	 */
 	@Override
 	public void update() {
 		
 		if (health <= 0) {
 			EnemySpawner.currentEnemiesOnLevel--;
 			world.deleteGameObject(this);
+			if (weapon != null) world.deleteGameObject(weapon);
 		}
 		
 		this.target = world.getPlayer();
@@ -101,6 +116,11 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		}
 	}
 	
+	/**
+	 * sets the right weapon frame index based on if the enemy is turned or not
+	 * @param direction
+	 * @author Bram van der Beek
+	 */
 	protected void setWeaponFrame(int direction) {
 		if (weapon != null) {
 			if (direction == 0) {
@@ -115,7 +135,11 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 			
 		}
 	}
-	
+	/**
+	 * lets the enemy receive damage
+	 * @param damage
+	 * @author Bram van der Beek
+	 */
 	public void receiveDamage(int damage) {
 		health -= damage;
 	}

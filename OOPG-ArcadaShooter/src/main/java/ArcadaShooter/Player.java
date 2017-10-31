@@ -22,6 +22,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
     public Weapon selectedWeapon;
     public boolean isImmortal;
     
+    /**
+     * Constructor of Player
+     * @param world
+     */
 	public Player(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
 		this.selectedWeapon = new Knife(world);
@@ -34,7 +38,12 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 		this.world = world;
 		this.world.addGameObject(selectedWeapon, getX() + 35, getY() + 25);
 	}
-
+	
+	/**
+	 * checks collision with the tiles
+	 * @author Bram van der Beek
+	 * @param List<CollidedTile> collidedTiles
+	 */
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;
@@ -88,6 +97,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         }
 	}
 	
+	/**
+	 * switches current weapon and adds it to the world
+	 * @author Bram van der Beek
+	 */
 	public void switchWeapon() {
 		if (selectedWeapon instanceof Knife) {
 			world.deleteGameObject(selectedWeapon);
@@ -101,6 +114,11 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 		}
 	}
 	
+	/**
+	 * lets the player receive damage
+	 * @param damage
+	 * @author Bram van der Beek
+	 */
 	public void receiveDamage(int damage) {
 		if(!isImmortal) {
 			health -= damage;
@@ -108,6 +126,11 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 		world.refreshDashboard();
 	}
 
+	/**
+	 * checks collision with pickups and applies buff to player
+	 * @author Bram van der Beek
+	 * @param List<GameObject> collidedGameObjects
+	 */
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for (GameObject g:collidedGameObjects) {
@@ -117,6 +140,10 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         }
 	}
 	
+	/**
+	 * check collision with world borders and weaponframe position
+	 * @author Bram van der Beek
+	 */
 	@Override
 	public void update() {
 		if (turned) {
@@ -149,7 +176,14 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         }
 	}
 	
-	public void keyPressed(int keyCode, char key) { //TODO: detect two keys?
+	/**
+	 * checks if key is pressed and registers players action
+	 * @param int keyCode
+	 * @param char key
+	 * @author Bram van der Beek
+	 */
+	@Override
+	public void keyPressed(int keyCode, char key) {
         final int speed = 5;
         if (key == 'a' || keyCode == world.LEFT) {
             setDirectionSpeed(270, speed);
@@ -172,43 +206,92 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         }
     }
 	
+	/**
+	 * checks if mouse is moved and binds them to a player aimx and aimy position
+	 * @author Bram van der Beek
+	 */
 	@Override
 	public void mouseMoved(int x, int y) {
 		setAimX(x);
 		setAimY(y);
     }
-
+	
+	/**
+	 * returns player ammo 
+	 * @return int ammo
+	 * @author Bram van der Beek
+	 */
 	public int getAmmo() {
 		return ammo;
 	}
-
+	
+	/**
+	 * sets player ammo 
+	 * @param int ammo
+	 * @author Bram van der Beek
+	 */
 	public void setAmmo(int ammo) {
 		this.ammo = ammo;
 	}
 	
+	/**
+	 * returns player health
+	 * @return int health
+	 * @author Bram van der Beek
+	 */
 	public int getHealth() {
 		return health;
 	}
 
+	/**
+	 * sets player health
+	 * @param int health
+	 * @author Bram van der Beek
+	 */
 	public void setHealth(int health) {
 		this.health = health;
 	}
+	
+	/**
+	 * returns player aimx position
+	 * @return float aimX
+	 * @author Bram van der Beek
+	 */
 	public float getAimX() {
 		return aimX;
 	}
 
+	/**
+	 * sets player aimx position
+	 * @param float aimX
+	 * @author Bram van der Beek
+	 */
 	public void setAimX(float aimX) {
 		this.aimX = aimX;
 	}
-
+	
+	/**
+	 * returns player aimy position
+	 * @return float aimY
+	 * @author Bram van der Beek
+	 */
 	public float getAimY() {
 		return aimY;
 	}
-
+	
+	/**
+	 * sets player aimy position
+	 * @param float aimY
+	 * @author Bram van der Beek
+	 */
 	public void setAimY(float aimY) {
 		this.aimY = aimY;
 	}
-
+	
+	/**
+	 * sets player immortality to false
+	 * @author Chris Buter
+	 */
 	public void setImortal() {
 		isImmortal = false;
 	}

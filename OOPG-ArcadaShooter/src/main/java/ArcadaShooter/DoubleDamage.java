@@ -9,7 +9,6 @@ import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.ICollidableWithTiles;
 import nl.han.ica.OOPDProcessingEngineHAN.Exceptions.TileNotFoundException;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
-import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
 import processing.core.PVector;
 
 public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableWithTiles{
@@ -30,7 +29,7 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
      */
 	@Override
 	public void triggerAlarm(String alarmName) {
-		world.getPlayer().selectedWeapon.setDamage();
+		world.getPlayer().selectedWeapon.resetDamage();
 	}
 	/**
      * Activate pickup
@@ -66,8 +65,6 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
 	}
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

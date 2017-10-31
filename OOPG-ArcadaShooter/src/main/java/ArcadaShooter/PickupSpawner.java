@@ -14,6 +14,7 @@ public class PickupSpawner implements IAlarmListener {
      * Constructor
      * @param world object to add item to
      * @param number of how fast the timer goes
+     * @author Chris Buter
      */
     public PickupSpawner(ArcadaShooter world,Sound pickupSound,float pickupsPerSecond) {
         this.pickupsPerSecond=pickupsPerSecond;
@@ -31,6 +32,7 @@ public class PickupSpawner implements IAlarmListener {
     /**
      * Method call when alarm is triggered
      * @param Alarm name
+     *@author Chris Buter
      */
     @Override
     public void triggerAlarm(String alarmName) {
@@ -39,7 +41,7 @@ public class PickupSpawner implements IAlarmListener {
     	int randomIndex = generator.nextInt(pickups.length);
 		Random rand = new Random();
 
-		int  x = rand.nextInt(world.WORLDWIDTH) + 1;
+		int x = rand.nextInt(world.WORLDWIDTH) + 1;
 		int y = rand.nextInt(world.WORLDHEIGHT) + 1;
         world.addGameObject(pickups[randomIndex] ,x, y);
         startAlarm();

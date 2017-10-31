@@ -59,7 +59,5 @@ public class Ammobox extends Pickup implements ICollidableWithTiles {
      */
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
 }

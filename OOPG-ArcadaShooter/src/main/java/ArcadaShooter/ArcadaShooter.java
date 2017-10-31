@@ -23,12 +23,17 @@ public class ArcadaShooter extends GameEngine {
 	private EnemySpawner enemySpawner;
 	public final int WORLDWIDTH = 3000;
 	public final int WORLDHEIGHT = 750;
+	public final int spawnY = 620;
 	private PImage img;
 
 	public static void main(String[] args) {
 		PApplet.main(new String[]{ArcadaShooter.class.getName()});
 	}
 	
+	/**
+	 * a method to setup up all the world variables
+	 * @author Bram van der Beek
+	 */
 	public void setupWorldVariables() {
 		img = loadImage("src/main/java/ArcadaShooter/media/crosshair.png");
 	}
@@ -36,21 +41,22 @@ public class ArcadaShooter extends GameEngine {
 	@Override
 	public void setupGame() {
 		setupWorldVariables();
-//        initializeSound();
         initializeTileMap();
         createSpawners();
         createObjects();
         
-
         createViewWithViewport(WORLDWIDTH, WORLDHEIGHT, 1280, 720, 1);
 	}
 	
+	/**
+	 * creates all object spawners the player can interact with
+	 * @author Bram van der Beek
+	 */
 	private void createSpawners() {
 		pickupSpawner = new PickupSpawner(this,pickupSound,(float) 1.1);
 		enemySpawner = new EnemySpawner(this);
 	}
 	
-
 	/**
      * Creates a view with a viewport
      * @param worldWidth Total width of world
@@ -91,12 +97,19 @@ public class ArcadaShooter extends GameEngine {
         addDashboard(waveDashboard);
     }
     
+    /**
+     * creates all objects that are in the world
+     * @author Bram van der Beek
+     */
     private void createObjects() {
 	    	player = new Player(this);
-	    	addGameObject(player, 100, 620);
+	    	addGameObject(player, 100, spawnY);
 	    	createDashboard(WORLDWIDTH, 100);
     }
     
+    /** 
+     * Initialiseert de tilemap
+     */
     private void initializeTileMap() {
         Sprite tileSprite = new Sprite("src/main/java/ArcadaShooter/media/tile.jpg");
 
@@ -125,25 +138,43 @@ public class ArcadaShooter extends GameEngine {
         tileMap = new TileMap(tileSize, tileTypes, tilesMap);
     }
     
+    
+    /**
+     * shoots bullets or makes knife stab based on mouseclick
+     * @author Bram van der Beek
+     */
     @Override
     public void mouseClicked() {
-	    	if (player.getAmmo() > 0 && player.selectedWeapon instanceof Gun) {
-	    		player.selectedWeapon.doAction(player, player.getAimX(), player.getAimY());
-	    	} else {
-	    		player.selectedWeapon.doAction(player, player.getAimX(), player.getAimY());
-	    	}
+    	if (player.getAmmo() > 0 && player.selectedWeapon instanceof Gun) {
+    		player.selectedWeapon.doAction(player, player.getAimX(), player.getAimY());
+    	} else {
+    		player.selectedWeapon.doAction(player, player.getAimX(), player.getAimY());
+    	}
 	}
     
+	/**
+	 * returns the player
+	 * @return Player
+	 * @author Bram van der Beek
+	 */
     public Player getPlayer() {
 		return player;
     }
     
+    /** 
+     * refreshes the dashboard of the game
+     * @author Bram van der Beek
+     */
     public void refreshDashboard() {
 	    	healthText.setText("Health: " + player.getHealth());
 	    	ammoText.setText("Ammo: " + player.getAmmo());
 	    	waveText.setText("Wave: " + enemySpawner.getWave());
     }
-
+    
+    /**
+     * updates the cursor img
+     * @author Bram van der Beek
+     */
 	@Override
 	public void update() {
 		cursor(img);

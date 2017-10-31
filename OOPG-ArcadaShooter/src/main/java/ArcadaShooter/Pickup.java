@@ -28,6 +28,7 @@ public abstract class Pickup extends SpriteObject implements IAlarmListener, ICo
         alarm.addTarget(this);
         alarm.start();
     }
+	
 	/**
      * Called when alarm is triggered
      * @param Alarm name
@@ -35,6 +36,7 @@ public abstract class Pickup extends SpriteObject implements IAlarmListener, ICo
      */
 	@Override
     public void triggerAlarm(String alarmName) {}
+	
 	/**
      * Delete game object
      * @param World where pickup is created
@@ -43,11 +45,11 @@ public abstract class Pickup extends SpriteObject implements IAlarmListener, ICo
 	public void delete(ArcadaShooter world) {
 		world.deleteGameObject(this);
 	}
+	
 	/**
      * Blueprint for pickup action method
      * @param Sprite PickupSprite
      * @author Chris Buter
      */
 	public abstract void doAction(Player player);
-	
 }

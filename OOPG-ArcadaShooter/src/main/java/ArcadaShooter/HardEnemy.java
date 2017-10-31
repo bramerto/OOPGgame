@@ -4,10 +4,21 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 
 public class HardEnemy extends Enemy {
 	
+	private final static int DAMAGE = 10;
+	private final static float SPEED = 0.2f;
+	
+	/**
+	 * creates a enemy with hard difficulty
+	 * @param world
+	 */
 	public HardEnemy(ArcadaShooter world) {
-		super(world, 20, 0.2f, new Gun(world));
+		super(world, DAMAGE, SPEED, new Gun(world, DAMAGE));
 	}
 	
+	/**
+	 * Enemy hard AI so it moves towards the player and checks if enemy is killed, also sets weapon frame of equiped weapon
+	 * @author Bram van der Beek
+	 */
 	@Override
 	public void update() {
 		this.target = world.getPlayer();
@@ -16,6 +27,7 @@ public class HardEnemy extends Enemy {
 		if (health <= 0) {
 			EnemySpawner.currentEnemiesOnLevel--;
 			world.deleteGameObject(this);
+			world.deleteGameObject(weapon);
 		}
 		
 		if (distance > 500) {

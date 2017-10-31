@@ -1,5 +1,6 @@
 package ArcadaShooter;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import nl.han.ica.OOPDProcessingEngineHAN.Alarm.Alarm;
@@ -13,9 +14,13 @@ public class EnemySpawner implements IAlarmListener {
 	private int wave;
 	private boolean waveIsSpawned;
 	private Random r;
-	public static int currentEnemiesOnLevel;
 	private int enemiesSpawnedThisWave;
+	public static int currentEnemiesOnLevel;
 	
+	/**
+	 * Constructor for enemy spawner
+	 * @param world
+	 */
 	public EnemySpawner(ArcadaShooter world) {
 		this.world = world;
 		this.enemiesPerSecond = 0.5f;
@@ -28,23 +33,28 @@ public class EnemySpawner implements IAlarmListener {
 		startAlarm();
 	}
 
+	/**
+	 * spawns enemies in waves with different tyypes
+	 * @param String alarmName
+	 * @author Bram van der Beek
+	 */
 	@Override
 	public void triggerAlarm(String alarmName) {
 		
 		if (currentEnemiesOnLevel < enemiesPerWave && !waveIsSpawned) {
-			int xEnemy = 1000-50;
-			int yEnemy = 620;
 			
-			Enemy[] enemies = { new HardEnemy(world) };
-		
-			if (wave > 5) enemies[1] = new MediumEnemy(world);
-			if (wave > 10) enemies[2] = new HardEnemy(world);
+			ArrayList<Enemy> enemies = new ArrayList<>();
+			enemies.add(new EasyEnemy(world));
 			
-			int randomIndex = r.nextInt(enemies.length);
-	        world.addGameObject(enemies[randomIndex], xEnemy,  yEnemy);
+			if (wave > 1) enemies.add(new MediumEnemy(world));
+			if (wave > 2) enemies.add(new HardEnemy(world));
+			
+			int randomIndex = r.nextInt(enemies.size());
+	        world.addGameObject(enemies.get(randomIndex), world.WORLDWIDTH - enemies.get(randomIndex).getWidth(), world.spawnY);
 	        
 	        if (enemiesSpawnedThisWave == enemiesPerWave - 1) {
         		waveIsSpawned = true;
+        		
 	        } else {
         		currentEnemiesOnLevel++;
         		enemiesSpawnedThisWave++;
@@ -60,13 +70,21 @@ public class EnemySpawner implements IAlarmListener {
         
         startAlarm();
 	}
-	
+	 /**
+	  * starts alarm
+	  * @author Bram van der Beek
+	  */
 	private void startAlarm() {
         Alarm alarm = new Alarm("New enemy", 1 / enemiesPerSecond);
         alarm.addTarget(this);
         alarm.start();
     }
 	
+	/**
+	 * returns current enemy wave
+	 * @return wave
+	 * @author Bram van der Beek
+	 */
 	public int getWave() {
 		return wave;
 	}

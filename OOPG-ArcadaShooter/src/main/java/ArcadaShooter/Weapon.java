@@ -6,6 +6,9 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 
 public abstract class Weapon extends AnimatedSpriteObject {
 	protected ArcadaShooter world;
+	protected int damage;
+	protected int previousDamage;
+	
 	/**
      * Constructor
      * @param Sprite object of weapon
@@ -23,6 +26,24 @@ public abstract class Weapon extends AnimatedSpriteObject {
      */
 	public abstract void doAction(GameObject from, float targetX, float targetY);
 	public void update() {}
-	public abstract void setDamage();
-	public abstract void doubleDamage();
+	
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+	
+	/**
+     * Double damage from pickup
+     * @author Chris Buter
+     */
+	public void doubleDamage() {
+		previousDamage = damage;
+		damage = damage *2;
+	}
+	/**
+	 * Resets damage of weapon initial damage value
+	 * @author Bram van der Beek
+	 */
+	public void resetDamage() {
+		damage = previousDamage;
+	}
 }

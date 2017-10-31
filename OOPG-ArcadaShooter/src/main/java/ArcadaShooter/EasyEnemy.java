@@ -1,8 +1,15 @@
 package ArcadaShooter;
 
 public class EasyEnemy extends Enemy {
-//TODO: make final for constants
+
+	private final static int DAMAGE = 5;
+	private final static float SPEED = 2;
+	
+	/**
+	 * creates a enemy with easy difficulty
+	 * @param world
+	 */
 	public EasyEnemy(ArcadaShooter world) {
-		super(world, 5, 2, null);
+		super(world, DAMAGE, SPEED, null);
 	}
 }
