@@ -14,7 +14,6 @@ import processing.core.PVector;
 
 public class Immunity extends Pickup implements IAlarmListener, ICollidableWithTiles {
     private ArcadaShooter world;
-    public boolean isActive;
     /**
      * Constructor
      * @param World where pickup spawns

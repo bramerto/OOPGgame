@@ -15,14 +15,20 @@ import processing.core.PVector;
 public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameObjects, ICollidableWithTiles {
 
 	protected ArcadaShooter world;
-	private int damage;
 	protected Player target;
 	protected float speed;
-	protected int damageDelay;
+	protected int damageDelay, health;
 	protected Weapon weapon;
-	protected int health;
+	private int damage;
 	private boolean jumped;
-	
+	 /**
+	  * Creates an Array
+	  * @param world
+	  * @param damage
+	  * @param speed
+	  * @param weapon
+	  * @author Bram van der Beek
+	  */
 	public Enemy(ArcadaShooter world, int damage, float speed, Weapon weapon) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/enemy.png"), 2);
 		this.world = world;

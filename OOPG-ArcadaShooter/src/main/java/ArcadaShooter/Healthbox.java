@@ -11,7 +11,6 @@ import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
 import processing.core.PVector;
 
 public class Healthbox extends Pickup implements ICollidableWithTiles {
-	final int size = 50;
     private ArcadaShooter world;
     
     /**

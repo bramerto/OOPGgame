@@ -13,7 +13,6 @@ import processing.core.PVector;
 
 public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableWithTiles{
     private ArcadaShooter world;
-    public boolean isActive;
     /**
      * Constructor
      * @param World The world where knife is created
@@ -66,5 +65,4 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
 	@Override
 	public void update() {
 	}
-
 }

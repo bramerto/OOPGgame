@@ -101,7 +101,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	 * switches current weapon and adds it to the world
 	 * @author Bram van der Beek
 	 */
-	public void switchWeapon() {
+	private void switchWeapon() {
 		if (selectedWeapon instanceof Knife) {
 			world.deleteGameObject(selectedWeapon);
 			selectedWeapon = new Gun(world);

@@ -17,7 +17,6 @@ public class ArcadaShooter extends GameEngine {
 	private TextObject healthText;
 	private TextObject ammoText;
 	private TextObject waveText;
-	private Sound pickupSound;
 	private Player player;
 	private PickupSpawner pickupSpawner;
 	private EnemySpawner enemySpawner;
@@ -53,7 +52,7 @@ public class ArcadaShooter extends GameEngine {
 	 * @author Bram van der Beek
 	 */
 	private void createSpawners() {
-		pickupSpawner = new PickupSpawner(this,pickupSound,(float) 1.1);
+		pickupSpawner = new PickupSpawner(this,(float) 1.1);
 		enemySpawner = new EnemySpawner(this);
 	}
 	

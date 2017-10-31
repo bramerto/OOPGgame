@@ -16,7 +16,7 @@ public class PickupSpawner implements IAlarmListener {
      * @param number of how fast the timer goes
      * @author Chris Buter
      */
-    public PickupSpawner(ArcadaShooter world,Sound pickupSound,float pickupsPerSecond) {
+    public PickupSpawner(ArcadaShooter world,float pickupsPerSecond) {
         this.pickupsPerSecond=pickupsPerSecond;
         this.world=world;
         random=new Random();

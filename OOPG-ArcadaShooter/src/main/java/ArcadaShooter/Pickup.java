@@ -10,8 +10,6 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
 
 public abstract class Pickup extends SpriteObject {
-	
-	boolean isActive;
 	ArcadaShooter world;
 	
 	/**

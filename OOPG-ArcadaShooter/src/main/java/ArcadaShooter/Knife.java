@@ -7,9 +7,7 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 
 public class Knife extends Weapon implements ICollidableWithGameObjects {
-	private int damage;
 	private int damageDelay;
-	private int previousDamage;
     /**
      * Constructor
      * @param World The world where knife is created
