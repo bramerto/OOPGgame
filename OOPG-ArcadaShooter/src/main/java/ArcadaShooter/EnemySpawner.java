@@ -32,7 +32,7 @@ public class EnemySpawner implements IAlarmListener {
 	public void triggerAlarm(String alarmName) {
 		
 		if (currentEnemiesOnLevel < enemiesPerWave && !waveIsSpawned) {
-			Enemy[] enemies = { new EasyEnemy(world) };
+			Enemy[] enemies = { new HardEnemy(world) };
 		
 			if (wave > 5) enemies[1] = new MediumEnemy(world);
 			if (wave > 10) enemies[2] = new HardEnemy(world);

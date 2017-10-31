@@ -14,16 +14,16 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 public class Bullet extends SpriteObject implements ICollidableWithTiles, ICollidableWithGameObjects{
 
 	private ArcadaShooter world;
-	private Bullet[] bullets;
 	public static int damage;
-
+	private GameObject shotFrom;
 	
-	public Bullet(ArcadaShooter world) {
+	public Bullet(ArcadaShooter world, GameObject shotFrom) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/bullet.png"));
 		this.world = world;
+		this.shotFrom = shotFrom;
 		this.damage = 10;
-		setGravity(0.8f);
 	}
+	
 	public static void resetDamage() {
 		damage = 10;
 	}
@@ -33,11 +33,14 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
 	
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g:collidedGameObjects) {
-            if (g instanceof Enemy) {
-            	//TODO: When enemy shoots it collides with itself
-            	
-        		((Enemy)g).receiveDamage(damage);
-        		world.deleteGameObject(this);
+            if (g instanceof Enemy && !(shotFrom instanceof Enemy)) {
+	        		((Enemy)g).receiveDamage(damage);
+	        		world.deleteGameObject(this);
+            }
+            
+            if (g instanceof Player && !(shotFrom instanceof Player)) {
+	            	((Player)g).receiveDamage(damage);
+	        		world.deleteGameObject(this);
             }
         }
     }
@@ -47,12 +50,12 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
 		for (CollidedTile ct : collidedTiles) {
 			if (ct.theTile instanceof NormalTile) {
         		if (ct.collisionSide == ct.TOP || ct.collisionSide == ct.INSIDE) {
-                    try {
-                    		world.deleteGameObject(this);
-                        
-                    } catch (TileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+	                try {
+	                		world.deleteGameObject(this);
+	                    
+	                } catch (TileNotFoundException e) {
+	                    e.printStackTrace();
+	                }
         		}
             
         		if (ct.collisionSide == ct.BOTTOM) {

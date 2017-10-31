@@ -33,7 +33,7 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		this.jumped = false;
 		damageDelay = 0;
 		setGravity(0.8f);
-		if (weapon != null) world.addGameObject(weapon, getX() + 35, getY() + 25);
+		if (this.weapon != null) this.world.addGameObject(this.weapon, getX() + 35, getY() + 25);
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package ArcadaShooter;
 
 import java.util.List;
-import java.util.Random;
 
 import ArcadaShooter.tiles.NormalTile;
 import nl.han.ica.OOPDProcessingEngineHAN.Collision.CollidedTile;
@@ -21,14 +20,12 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
     private int health, ammo;
     private float aimX, aimY;
     public Weapon selectedWeapon;
-    private Random r;
     public static boolean isImmortal;
     
 	public Player(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/player.png"), 2);
 		this.selectedWeapon = new Knife(world);
         this.health = 100;
-        this.r = new Random();
         this.jumped = false;
         this.turned = false;
         this.ammo = 200;
@@ -122,7 +119,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 	
 	@Override
 	public void update() {
-		if (turned) { //TODO: fix gravity on weapon
+		if (turned) {
 			selectedWeapon.setX(getX() - 20);
 			selectedWeapon.setY(getY() + 25);
 		} else {
@@ -214,6 +211,5 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 
 	public static void setImortal() {
 		isImmortal = false;
-		
 	}
 }

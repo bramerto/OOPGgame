@@ -12,12 +12,12 @@ public class Gun extends Weapon {
 	}
 	
 	private void shoot(GameObject from) {
-		Bullet p = new Bullet(world);
+		Bullet p = new Bullet(world, from);
 		world.addGameObject(p, from.getX() + 25,  from.getY() + 25);
 		p.setDirectionSpeed(aimAngle, 20);
 		
 		if (from instanceof Player) {
-        	((Player)from).setAmmo(((Player)from).getAmmo() - 1);
+        		((Player)from).setAmmo(((Player)from).getAmmo() - 1);
         }
 		world.refreshDashboard();
 	}
