@@ -6,15 +6,15 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 public class Gun extends Weapon {
 	private float aimAngle;
 	private int bulletDamage;
-	
+	/**
+     * Constructor
+     * @param List of all game objects
+     * @author Chris Buter
+     */
 	public Gun(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/weapon_pistol.png"), world);
 		setDamage();
 	}
-	/**
-     * Attacks with Gun
-     * @param Gameobject from Player element
-     */
 	private void shoot(GameObject from) {
 		Bullet p = new Bullet(world, bulletDamage, from);
 		world.addGameObject(p, from.getX() + 25,  from.getY() + 25);
@@ -32,6 +32,7 @@ public class Gun extends Weapon {
      * @param Gameobject from Player element
      * @param TargetX x coordinates for target
      * @param TargetY y coordinates for target
+     * @author Chris Buter
      */
 	@Override
 	public void doAction(GameObject from, float targetX, float targetY) {
@@ -43,6 +44,7 @@ public class Gun extends Weapon {
 	}
 	/**
      * Sets bullet damage
+     * @author Chris Buter
      */
 	@Override
 	public void setDamage() {
@@ -50,6 +52,7 @@ public class Gun extends Weapon {
 	}
 	/**
      * Doubles bullet damage
+     * @author Chris Buter
      */
 	@Override
 	public void doubleDamage() {

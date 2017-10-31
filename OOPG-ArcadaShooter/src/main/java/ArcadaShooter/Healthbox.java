@@ -38,7 +38,7 @@ public class Healthbox extends Pickup implements ICollidableWithTiles {
 	/**
      * Check for collisions with tiles
      * @param List of all tiles
-     * @param Sound for pick up
+     * @author Chris Buter
      */
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
@@ -55,7 +55,10 @@ public class Healthbox extends Pickup implements ICollidableWithTiles {
 			}
         }
 	}
-
+	/**
+     * Updates game object
+     * @author Chris Buter
+     */
 	@Override
 	public void update() {
 	}

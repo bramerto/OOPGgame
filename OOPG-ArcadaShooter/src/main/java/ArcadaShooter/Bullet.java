@@ -15,7 +15,13 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
 	private ArcadaShooter world;
 	private GameObject shotFrom;
 	private int damage;
-	
+	/**
+     * Constructor
+     * @param World where the bullet spawns
+     * @param Damage done with bullet
+     * @param shotFrom Location where player is
+     * @author Chris Buter
+     */
 	public Bullet(ArcadaShooter world, int damage, GameObject shotFrom) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/bullet.png"));
 		this.shotFrom = shotFrom;
@@ -23,15 +29,25 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
 		setDamage(damage);
 	}
 	/**
-     * Getter and Setter for damage
+     * Returns damage
+     * @author Chris Buter
      */
 	public int getDamage() {
 		return damage;
 	}
+	/**
+     * Sets Damage
+     * @param Damage that bullet will do
+     * @author Chris Buter
+     */
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
-	
+	/**
+     * Check for collisions with game objects
+     * @param List of all game objects
+     * @author Chris Buter
+     */
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g:collidedGameObjects) {
             if (g instanceof Enemy && !(shotFrom instanceof Enemy)) {
@@ -45,7 +61,11 @@ public class Bullet extends SpriteObject implements ICollidableWithTiles, IColli
             }
         }
     }
-
+	/**
+     * Check for collisions with tiles
+     * @param List of all tiles
+     * @author Chris Buter
+     */
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		for (CollidedTile ct : collidedTiles) {

@@ -15,18 +15,30 @@ import processing.core.PVector;
 public class Immunity extends Pickup implements IAlarmListener, ICollidableWithTiles {
     private ArcadaShooter world;
     public boolean isActive;
-	
+    /**
+     * Constructor
+     * @param World where pickup spawns
+     * @author Chris Buter
+     */
 	public Immunity(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/pickup_immunity.png"));
         this.world=world;
         setGravity(0.3f);
 	}
-	
+	/**
+     * Called when alarm is triggered
+     * @param Alarm name
+     * @author Chris Buter
+     */
 	@Override
 	public void triggerAlarm(String alarmName) {	
-		Player.setImortal();
+		world.getPlayer().setImortal();
 	}
-	
+	/**
+     * Activate and remove pickup
+     * @param Player that picks up the pickup
+     * @author Chris Buter
+     */
 	@Override
 	public void doAction(Player player) {
 			Alarm alarm=new Alarm("Start Immortal",1/0.1);
@@ -36,11 +48,18 @@ public class Immunity extends Pickup implements IAlarmListener, ICollidableWithT
 
 		world.deleteGameObject(this);
 	}
-	
+	/**
+     * Updates game object
+     * @author Chris Buter
+     */
 	@Override
 	public void update() {
 	}
-	
+	/**
+     * Check for tile collisions
+     * @param List of collidable tiles
+     * @author Chris Buter
+     */
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;

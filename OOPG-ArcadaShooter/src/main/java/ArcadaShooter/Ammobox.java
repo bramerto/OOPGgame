@@ -12,7 +12,11 @@ import processing.core.PVector;
 
 public class Ammobox extends Pickup implements ICollidableWithTiles {
     private ArcadaShooter world;
-	
+    /**
+     * Constructor
+     * @param World where the pickup spawns
+     * @author Chris Buter
+     */
 	public Ammobox(ArcadaShooter world) {
 		super(new Sprite("src/main/java/ArcadaShooter/media/pickup_ammobox.png"));
         this.world=world;
@@ -21,6 +25,7 @@ public class Ammobox extends Pickup implements ICollidableWithTiles {
 	/**
      * Activate pickup
      * @param Player element
+     * @author Chris Buter
      */
 	@Override
 	public void doAction(Player player) {
@@ -28,7 +33,11 @@ public class Ammobox extends Pickup implements ICollidableWithTiles {
 		world.deleteGameObject(this);
 		world.refreshDashboard();
 	}
-	
+	/**
+     * Check for collisions with tiles
+     * @param List of all tiles
+     * @author Chris Buter
+     */
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;
@@ -44,13 +53,12 @@ public class Ammobox extends Pickup implements ICollidableWithTiles {
 			}
         }
 	}
+	/**
+     * Updates game object
+     * @author Chris Buter
+     */
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void triggerAlarm(String alarmName) {
 		// TODO Auto-generated method stub
 		
 	}

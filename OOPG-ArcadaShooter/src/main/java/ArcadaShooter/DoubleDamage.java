@@ -45,7 +45,10 @@ public class DoubleDamage extends Pickup implements IAlarmListener, ICollidableW
         world.getPlayer().selectedWeapon.doubleDamage();
 		world.deleteGameObject(this);
 	}
-	
+	/**
+     * Check for collisions with tiles
+     * @param List of all tiles
+     */
 	@Override
 	public void tileCollisionOccurred(List<CollidedTile> collidedTiles) {
 		PVector vector;

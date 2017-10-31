@@ -22,11 +22,17 @@ public class Knife extends Weapon implements ICollidableWithGameObjects {
      * @param Gameobject from Player element
      * @param TargetX x coordinates for target
      * @param TargetY y coordinates for target
+     * @author Chris Buter
      */
 	@Override
 	public void doAction(GameObject from, float targetX, float targetY) {
 		this.setX(this.getX() + 20);
 	}
+	/**
+     * Check for collisions with game objects
+     * @param List of all game objects
+     * @author Chris Buter
+     */
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
         for (GameObject g:collidedGameObjects) {
             if (g instanceof Enemy) {
@@ -41,6 +47,7 @@ public class Knife extends Weapon implements ICollidableWithGameObjects {
     }
 	/**
      * Resets damage to default
+     * @author Chris Buter
      */
 	@Override
 	public void setDamage() {
@@ -48,6 +55,7 @@ public class Knife extends Weapon implements ICollidableWithGameObjects {
 	}
 	/**
      * Double damage from pickup
+     * @author Chris Buter
      */
 	public void doubleDamage() {
 		this.damage = damage *2;
