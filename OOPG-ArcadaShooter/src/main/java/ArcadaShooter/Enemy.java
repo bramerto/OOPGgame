@@ -77,29 +77,31 @@ public class Enemy extends AnimatedSpriteObject implements ICollidableWithGameOb
 		
 		this.target = world.getPlayer();
 		
-		if (target.getY() > this.y && target.getX() > this.x && !jumped) {
-			setDirectionSpeed(45, speed);
+		if (target.getY() < this.y && target.getX() > this.x && !jumped) {
+			setDirectionSpeed(45, speed*4);
 			setCurrentFrameIndex(0);
+			setWeaponFrame(0);
 			jumped = true;
 			
-		} else if (target.getY() > this.y && target.getX() < this.x && !jumped) {
-			setDirectionSpeed(315, speed);
+		} else if (target.getY() < this.y && target.getX() < this.x && !jumped) {
+			setDirectionSpeed(315, speed*4);
 			setCurrentFrameIndex(1);
+			setWeaponFrame(1);
 			jumped = true;
 			
-		} else if (target.getX() > this.x) {
+		} else if (target.getX() > this.x && !jumped) {
 			setDirectionSpeed(90, speed);
 			setCurrentFrameIndex(0);
 			setWeaponFrame(0);
 			
-		} else if (target.getX() < this.x) {
+		} else if (target.getX() < this.x && !jumped) {
 			setDirectionSpeed(270, speed);
 			setCurrentFrameIndex(1);
 			setWeaponFrame(1);
 		}
 	}
 	
-	private void setWeaponFrame(int direction) {
+	protected void setWeaponFrame(int direction) {
 		if (weapon != null) {
 			if (direction == 0) {
 				weapon.setCurrentFrameIndex(0);

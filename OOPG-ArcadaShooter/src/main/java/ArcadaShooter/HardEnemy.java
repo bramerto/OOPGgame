@@ -22,11 +22,14 @@ public class HardEnemy extends Enemy {
 			if (target.getX() > this.x) {
 				setDirectionSpeed(90, speed);
 				setCurrentFrameIndex(0);
+				setWeaponFrame(0);
 				
 			} else if (target.getX() < this.x) {
 				setDirectionSpeed(270, speed);
 				setCurrentFrameIndex(1);
+				setWeaponFrame(1);
 			}
+			
 		} else {
 			if (damageDelay == 100 || damageDelay == 0) {
 				((Gun)weapon).doAction((GameObject)this, target.getX(), target.getY());

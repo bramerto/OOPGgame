@@ -32,13 +32,16 @@ public class EnemySpawner implements IAlarmListener {
 	public void triggerAlarm(String alarmName) {
 		
 		if (currentEnemiesOnLevel < enemiesPerWave && !waveIsSpawned) {
+			int xEnemy = 1000-50;
+			int yEnemy = 620;
+			
 			Enemy[] enemies = { new HardEnemy(world) };
 		
 			if (wave > 5) enemies[1] = new MediumEnemy(world);
 			if (wave > 10) enemies[2] = new HardEnemy(world);
 			
 			int randomIndex = r.nextInt(enemies.length);
-	        world.addGameObject(enemies[randomIndex], 1000 - 50,  620);
+	        world.addGameObject(enemies[randomIndex], xEnemy,  yEnemy);
 	        
 	        if (enemiesSpawnedThisWave == enemiesPerWave - 1) {
         		waveIsSpawned = true;
