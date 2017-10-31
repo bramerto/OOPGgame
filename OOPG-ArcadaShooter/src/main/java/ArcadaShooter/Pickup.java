@@ -9,7 +9,7 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Sound.Sound;
 
-public abstract class Pickup extends SpriteObject implements IAlarmListener, ICollidableWithTiles {
+public abstract class Pickup extends SpriteObject {
 	
 	boolean isActive;
 	ArcadaShooter world;
@@ -17,25 +17,11 @@ public abstract class Pickup extends SpriteObject implements IAlarmListener, ICo
 	/**
      * Constructor
      * @param Sprite PickupSprite
-     * @author Chris
+     * @author Chris Buter
      */
 	public Pickup(Sprite sprite) {
 		super(sprite);
 	}
-
-	private void startAlarm() {
-        Alarm alarm = new Alarm("New pickup",1/1.1);
-        alarm.addTarget(this);
-        alarm.start();
-    }
-	
-	/**
-     * Called when alarm is triggered
-     * @param Alarm name
-     * @author Chris Buter
-     */
-	@Override
-    public void triggerAlarm(String alarmName) {}
 	
 	/**
      * Delete game object
