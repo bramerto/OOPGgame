@@ -156,6 +156,9 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
 		
 		if (health<=0) {
 			world.exit();
+			
+		} else if (health > 100) {
+			health = 100;
 		}
 		
 		if (getX() <= 0) {
