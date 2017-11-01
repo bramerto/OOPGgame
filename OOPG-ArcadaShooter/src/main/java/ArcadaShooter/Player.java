@@ -32,7 +32,7 @@ public class Player extends AnimatedSpriteObject implements ICollidableWithGameO
         this.health = 100;
         this.jumped = false;
         this.turned = false;
-        this.ammo = 200;
+        this.ammo = 0;
         setGravity(0.8f);
         setFriction(0.1f);
 		this.world = world;
